@@ -7,3 +7,7 @@ run -it --name kafka-zkless -p 9092:9092 -e LOG_DIR=/tmp/logs quay.io/strimzi/ka
 ```
 
 # Creating the streaming producer
+
+# Creating the a synchronous comsumer
+
+# Creating the an asynchronous comsumer
