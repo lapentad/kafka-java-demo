@@ -14,8 +14,9 @@ import static java.lang.Thread.sleep;
 
 class SimpleProducer {
 
-    public SimpleProducer(String topicName) {
+    public SimpleProducer(String topicName) throws Exception {
         setTopicName(topicName);
+        outputPropertiesValue();
     }
 
     private KafkaProducer<String, String> kafkaProducer;
@@ -68,5 +69,16 @@ class SimpleProducer {
         this.kafkaProducer = kafkaProducer;
     }
 
+    private void outputPropertiesValue() throws Exception {
+        Properties props = getProperties();
+        System.out.println(props.getProperty("enable.auto.commit"));
+        System.out.println(props.getProperty("default.topic"));
+        System.out.println(props.getProperty("boostrap.servers"));
+        System.out.println(props.getProperty("key.serializer"));
+        System.out.println(props.getProperty("value.serializer"));
+        System.out.println(props.getProperty("key.deserializer"));
+        System.out.println(props.getProperty("value.deserializer"));
+        System.out.println(props.getProperty("group.id"));
+    }
 
 }
