@@ -1,12 +1,12 @@
 package com.demo.kafka;
 
-import com.demo.kafka.PropertiesHelper;
+import com.demo.kafka.DataHelper;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.Properties;
-import java.util.Random;
+
 
 
 import static com.demo.kafka.PropertiesHelper.getProperties;
@@ -25,8 +25,8 @@ class SimpleProducer {
         while (true) {
             String topicName = getTopicName();
             String key = String.valueOf(i);
-            String message = getRandomString();
-            this.send(topicName, key, message);
+            String message = DataHelper.getRandomString();
+            this.send(key, message);
             i++;
             Thread.sleep(100);
         }
@@ -43,8 +43,8 @@ class SimpleProducer {
         return this.topicName;
     }
 
-    private void send(String topicName, String key, String message) throws Exception {
-        ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>(topicName, key, message);
+    protected void send(String key, String message) throws Exception {
+        ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>(this.getTopicName(), key, message);
         getKafkaProducer().send(producerRecord);
     }
 
@@ -68,16 +68,5 @@ class SimpleProducer {
         this.kafkaProducer = kafkaProducer;
     }
 
-    public String getRandomString() {
-        int leftLimit = 48; // numeral '0'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
-        Random random = new Random();
 
-        return random.ints(leftLimit, rightLimit + 1)
-                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
-    }
 }

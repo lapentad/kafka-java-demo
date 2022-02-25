@@ -3,7 +3,6 @@ package com.demo.kafka;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.util.Properties;
-import com.demo.kafka.PropertiesHelper;
 
 public class PropertiesHelperTest {
     @Test
