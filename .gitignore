@@ -1,6 +1,7 @@
 .idea
 .DS_Store
 target
+logging.log
 
 # Compiled class file
 *.class
