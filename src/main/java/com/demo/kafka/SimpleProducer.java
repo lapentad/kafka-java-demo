@@ -78,7 +78,7 @@ class SimpleProducer {
         Properties props = getProperties();
         System.out.println(props.getProperty("enable.auto.commit"));
         System.out.println(props.getProperty("default.topic"));
-        System.out.println(props.getProperty("boostrap.servers"));
+        System.out.println(props.getProperty("bootstrap.servers"));
         System.out.println(props.getProperty("key.serializer"));
         System.out.println(props.getProperty("value.serializer"));
         System.out.println(props.getProperty("key.deserializer"));

@@ -22,7 +22,7 @@ public class SimpleProducerTest {
 
     @Test
     public void canCreateProducerAndPostToTopicTest() throws Exception {
-        SimpleProducer producer = new SimpleProducer("test-topic");
+        SimpleProducer producer = new SimpleProducer("test-topic-02");
         String message = DataHelper.getRandomString();
         String key = String.valueOf(2);
         producer.send(key,message);
@@ -30,8 +30,8 @@ public class SimpleProducerTest {
 
     @Test
     public void canProduceToStreamTest() throws Exception {
-        SimpleProducer producer = new SimpleProducer("test-topic");
-        producer.run(10);
+        SimpleProducer producer = new SimpleProducer("test-topic-02");
+        producer.run(100);
     }
 
     @Test
