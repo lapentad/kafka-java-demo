@@ -1,19 +1,19 @@
 package com.demo.kafka;
 
-import com.demo.kafka.DataHelper;
+import java.util.UUID;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.json.simple.JSONObject;
 
 import java.util.Properties;
 
 
-
+import static com.demo.kafka.DataHelper.getMessageLogEntryJSON;
 import static com.demo.kafka.PropertiesHelper.getProperties;
-import static java.lang.Thread.sleep;
+import org.apache.log4j.Logger;
 
 class SimpleProducer {
-
     public SimpleProducer(String topicName) throws Exception {
         setTopicName(topicName);
         outputPropertiesValue();
@@ -21,16 +21,18 @@ class SimpleProducer {
 
     private KafkaProducer<String, String> kafkaProducer;
 
-    public void run() throws Exception {
+    static Logger log = Logger.getLogger(SimpleProducer.class.getName());
+
+    public void run(int numberOfMessages) throws Exception {
         int i = 0;
-        while (true) {
-            String topicName = getTopicName();
-            String key = String.valueOf(i);
+        while (i <= numberOfMessages) {
+            String key = UUID.randomUUID().toString();
             String message = DataHelper.getRandomString();
             this.send(key, message);
             i++;
             Thread.sleep(100);
         }
+        this.close();
 
     }
 
@@ -45,7 +47,10 @@ class SimpleProducer {
     }
 
     protected void send(String key, String message) throws Exception {
+        String topicName = this.getTopicName();
         ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>(this.getTopicName(), key, message);
+        JSONObject obj = DataHelper.getMessageLogEntryJSON(topicName,key,message);
+        log.info(obj.toJSONString());
         getKafkaProducer().send(producerRecord);
     }
 

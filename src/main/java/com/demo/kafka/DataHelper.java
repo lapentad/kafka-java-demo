@@ -1,6 +1,7 @@
 package com.demo.kafka;
 
 import java.util.Random;
+import org.json.simple.JSONObject;
 
 public class DataHelper {
 
@@ -16,4 +17,16 @@ public class DataHelper {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
+
+    public static JSONObject getMessageLogEntryJSON(String topic, String key, String message){
+        JSONObject obj = new JSONObject();
+
+        obj.put("topic", topic);
+        obj.put("key", key);
+        obj.put("message", message);
+
+        return obj;
+    }
+
+
 }

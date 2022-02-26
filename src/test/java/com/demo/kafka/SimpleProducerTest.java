@@ -1,10 +1,9 @@
 package com.demo.kafka;
 
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import java.util.Properties;
 import java.util.Random;
+import org.json.simple.JSONObject;
 
 public class SimpleProducerTest {
 
@@ -22,11 +21,31 @@ public class SimpleProducerTest {
     }
 
     @Test
-    public void canCreateProducerTest() throws Exception {
+    public void canCreateProducerAndPostToTopicTest() throws Exception {
         SimpleProducer producer = new SimpleProducer("test-topic");
         String message = DataHelper.getRandomString();
         String key = String.valueOf(2);
         producer.send(key,message);
     }
+
+    @Test
+    public void canProduceToStreamTest() throws Exception {
+        SimpleProducer producer = new SimpleProducer("test-topic");
+        producer.run(10);
+    }
+
+    @Test
+    public void canUseJSONObject(){
+        JSONObject obj = new JSONObject();
+
+        obj.put("topic", "mytopc");
+        obj.put("key", "myKey");
+        obj.put("message", "myMessage");
+
+        String str = obj.toString();
+        Assert.assertEquals(str.getClass(),String.class);
+    }
+
+
 
 }
