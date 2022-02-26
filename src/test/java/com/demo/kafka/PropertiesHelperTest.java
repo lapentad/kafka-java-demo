@@ -10,7 +10,7 @@ public class PropertiesHelperTest {
         Properties props = PropertiesHelper.getProperties();
         Assert.assertEquals(props.getProperty("enable.auto.commit").getClass(),String.class);
         Assert.assertEquals(props.getProperty("default.topic").getClass(),String.class);
-        Assert.assertEquals(props.getProperty("boostrap.servers").getClass(),String.class);
+        Assert.assertEquals(props.getProperty("bootstrap.servers").getClass(),String.class);
         Assert.assertEquals(props.getProperty("key.serializer").getClass(),String.class);
         Assert.assertEquals(props.getProperty("value.serializer").getClass(),String.class);
         Assert.assertEquals(props.getProperty("key.deserializer").getClass(),String.class);
