@@ -1,5 +1,15 @@
 # Using Kafka with a Java Producer and Consumer
 
+- [Using Kafka with a Java Producer and Consumer](#using-kafka-with-a-java-producer-and-consumer)
+- [Install Java](#install-java)
+- [Install Maven](#install-maven)
+- [Install Podman](#install-podman)
+- [Install Kafka as a container](#install-kafka-as-a-container)
+- [Open up the Kafka port](#open-up-the-kafka-port)
+- [Creating the streaming producer](#creating-the-streaming-producer)
+- [Creating a synchronous consumer](#creating-a-synchronous-consumer)
+- [Creating an asynchronous consumer](#creating-an-asynchronous-consumer)
+
 # Install Java
 
 `sudo apt-get update -y`
