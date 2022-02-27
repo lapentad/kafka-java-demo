@@ -25,36 +25,6 @@ public class SimpleProducerConsumerTest {
     }
 
     @Test
-    public void canReadMessagesOnExistingTopicTest() throws Exception {
-        String topicName = "2022-Feb-26kQ2QNzdSUI";
-        Properties props = new Properties();
-        props.setProperty("bootstrap.servers", "localhost:9092");
-        props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "test-group");
-        props.setProperty("enable.auto.commit", "true");
-        props.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.setProperty("auto.commit.interval.ms", "1000");
-        props.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Collections.singletonList(topicName));
-        consumer.seekToBeginning(consumer.assignment());
-        int recNum = 10;
-        while (recNum > 0) {
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(5000));
-            if (records.count() == 0) {
-                break;
-            }
-
-            for (ConsumerRecord<String, String> record : records) {
-                new KafkaMessageTestHandlerImpl().processMessage(topicName, record);
-                recNum--;
-            }
-        }
-
-        consumer.close();
-    }
-
-    @Test
     public void canGetFixedTopic() throws Exception {
         //go in once
         TopicListing result1 = KafkaTopicHelper.createFixedTopic(fixedTopicName);
