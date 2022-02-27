@@ -2,15 +2,15 @@ package com.demo.kafka;
 
 import java.util.UUID;
 
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.json.simple.JSONObject;
 
 import java.util.Properties;
 
-
-import static com.demo.kafka.DataHelper.getMessageLogEntryJSON;
 import static com.demo.kafka.PropertiesHelper.getProperties;
+
 import org.apache.log4j.Logger;
 
 class SimpleProducer {
@@ -48,8 +48,9 @@ class SimpleProducer {
 
     protected void send(String key, String message) throws Exception {
         String topicName = this.getTopicName();
+        String source = SimpleProducer.class.getName();
         ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>(this.getTopicName(), key, message);
-        JSONObject obj = DataHelper.getMessageLogEntryJSON(topicName,key,message);
+        JSONObject obj = DataHelper.getMessageLogEntryJSON(source, topicName, key, message);
         log.info(obj.toJSONString());
         getKafkaProducer().send(producerRecord);
     }

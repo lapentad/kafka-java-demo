@@ -23,14 +23,22 @@ public class DataHelper {
                 .toString();
     }
 
-    public static JSONObject getMessageLogEntryJSON(String topic, String key, String message) throws Exception {
+    public static JSONObject getMessageLogEntryJSON(String source, String topic, String key, String message) throws Exception {
         JSONObject obj = new JSONObject();
         String bootstrapServers = getProperties().getProperty("bootstrap.servers");
         obj.put("bootstrapServers", bootstrapServers);
+        obj.put("source", source);
         obj.put("topic", topic);
         obj.put("key", key);
         obj.put("message", message);
 
+        return obj;
+    }
+
+    public static JSONObject getSimpleJSONObject(String message) throws Exception {
+        JSONObject obj = new JSONObject();
+        String bootstrapServers = getProperties().getProperty("bootstrap.servers");
+        obj.put("message", message);
         return obj;
     }
 
