@@ -92,7 +92,7 @@ podman run -it --name kafka-zkless -p 9092:9092 -e LOG_DIR=/tmp/logs quay.io/str
 
 # Open up the Kafka port 
 
-`sudo ufw enable && sudo ufw 9092`
+`sudo ufw enable && sudo ufw allow 9092`
 
 # Creating the streaming producer
 
