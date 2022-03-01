@@ -1,13 +1,11 @@
 package com.demo.kafka;
 
 import org.apache.kafka.clients.admin.*;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.KafkaFuture;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 public class KafkaTopicHelper {
 
@@ -46,7 +44,7 @@ public class KafkaTopicHelper {
 
         Properties props = PropertiesHelper.getProperties();
         Admin admin = Admin.create(props);
-        String newTopicName = getCurrentUtcTimestamp() + DataHelper.getRandomString();
+        String newTopicName = getCurrentUtcTimestamp() + MessageHelper.getRandomString();
         int partitions = 1;
         short replicationFactor = 1;
         NewTopic newTopic = new NewTopic(newTopicName, partitions, replicationFactor);

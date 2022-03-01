@@ -38,7 +38,7 @@ public class SimpleProducerConsumerTest {
 
     @Test
     public void canProduceConsumeStreamTest() throws Exception {
-        //Create a brand new topic
+        //Create a topic
         KafkaTopicHelper.createFixedTopic(fixedTopicName);
 
         //Wait for Kafka to catch up with the topic creation before producing
@@ -53,6 +53,25 @@ public class SimpleProducerConsumerTest {
         Thread.sleep(1000);
 
         //consume the messages
-        SimpleConsumer.run(fixedTopicName, messageCount, new KafkaMessageTestHandlerImpl());
+        SimpleConsumer.run(fixedTopicName, new KafkaMessageTestHandlerImpl());
+    }
+
+    @Test
+    public void canProduceConsumeAlwaysStreamTest() throws Exception {
+        KafkaTopicHelper.createFixedTopic(fixedTopicName);
+
+        //Wait for Kafka to catch up with the topic creation before producing
+        Thread.sleep(3000);
+
+        //create messages
+        int messageCount = 200;
+        SimpleProducer producer = new SimpleProducer(fixedTopicName);
+        //producer.run(messageCount);
+
+        //Wait for Kafka to catch up before consuming messages
+        Thread.sleep(1000);
+
+        //consume the messages
+        //SimpleConsumer.runAlways(fixedTopicName, new KafkaMessageTestHandlerImpl());
     }
 }

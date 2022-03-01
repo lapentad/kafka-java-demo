@@ -4,12 +4,18 @@ import java.util.Properties;
 import java.util.Random;
 import org.json.simple.JSONObject;
 
-import static com.demo.kafka.PropertiesHelper.getProperties;
-
-public class DataHelper {
+/**
+ * The type Message helper.
+ */
+public class MessageHelper {
 
     private static Properties props;
 
+    /**
+     * Gets random string.
+     *
+     * @return the random string
+     */
     public static String getRandomString() {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
@@ -23,6 +29,16 @@ public class DataHelper {
                 .toString();
     }
 
+    /**
+     * Gets message log entry json.
+     *
+     * @param source  the source
+     * @param topic   the topic
+     * @param key     the key
+     * @param message the message
+     * @return the message log entry json
+     * @throws Exception the exception
+     */
     public static JSONObject getMessageLogEntryJSON(String source, String topic, String key, String message) throws Exception {
         JSONObject obj = new JSONObject();
         String bootstrapServers = getProperties().getProperty("bootstrap.servers");
@@ -35,6 +51,13 @@ public class DataHelper {
         return obj;
     }
 
+    /**
+     * Gets simple json object.
+     *
+     * @param message the message
+     * @return the simple json object
+     * @throws Exception the exception
+     */
     public static JSONObject getSimpleJSONObject(String message) throws Exception {
         JSONObject obj = new JSONObject();
         String bootstrapServers = getProperties().getProperty("bootstrap.servers");
@@ -42,6 +65,12 @@ public class DataHelper {
         return obj;
     }
 
+    /**
+     * Gets properties.
+     *
+     * @return the properties
+     * @throws Exception the exception
+     */
     protected static Properties getProperties() throws Exception {
         if (props == null){
             props = PropertiesHelper.getProperties();

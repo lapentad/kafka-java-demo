@@ -2,7 +2,6 @@ package com.demo.kafka;
 
 import java.util.UUID;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.json.simple.JSONObject;
@@ -13,7 +12,17 @@ import static com.demo.kafka.PropertiesHelper.getProperties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * The type Simple producer.
+ */
 class SimpleProducer {
+    /**
+     * Instantiates a new SimpleProducer object.
+     *
+     * @param topicName the name of the topic to which messages are sent. If the topic
+     *                  does not exist, it is created.
+     * @throws Exception the exception
+     */
     public SimpleProducer(String topicName) throws Exception {
         setTopicName(topicName);
         outputPropertiesValue();
@@ -21,13 +30,22 @@ class SimpleProducer {
 
     private KafkaProducer<String, String> kafkaProducer;
 
+    /**
+     * The Log.
+     */
     static Logger log = Logger.getLogger(SimpleProducer.class.getName());
 
+    /**
+     * Run.
+     *
+     * @param numberOfMessages the number of messages
+     * @throws Exception the exception
+     */
     public void run(int numberOfMessages) throws Exception {
         int i = 0;
         while (i <= numberOfMessages) {
             String key = UUID.randomUUID().toString();
-            String message = DataHelper.getRandomString();
+            String message = MessageHelper.getRandomString();
             this.send(key, message);
             i++;
             Thread.sleep(100);
@@ -46,15 +64,25 @@ class SimpleProducer {
         return this.topicName;
     }
 
+    /**
+     * Send.
+     *
+     * @param key     the key
+     * @param message the message
+     * @throws Exception the exception
+     */
     protected void send(String key, String message) throws Exception {
         String topicName = this.getTopicName();
         String source = SimpleProducer.class.getName();
         ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>(this.getTopicName(), key, message);
-        JSONObject obj = DataHelper.getMessageLogEntryJSON(source, topicName, key, message);
+        JSONObject obj = MessageHelper.getMessageLogEntryJSON(source, topicName, key, message);
         log.info(obj.toJSONString());
         getKafkaProducer().send(producerRecord);
     }
 
+    /**
+     * Close.
+     */
     public void close() {
         try {
             getKafkaProducer().close();

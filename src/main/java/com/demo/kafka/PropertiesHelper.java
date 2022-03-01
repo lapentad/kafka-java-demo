@@ -7,7 +7,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
+
+/**
+ * The type Properties helper.
+ */
 public class PropertiesHelper {
+    /**
+     * Gets properties.
+     *
+     * @return the properties
+     * @throws Exception the exception
+     */
     public static Properties getProperties() throws Exception {
 
         Properties props = null;

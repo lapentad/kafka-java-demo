@@ -4,27 +4,36 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Locale;
-import java.util.Properties;
 
+/**
+ * The type Application.
+ */
 public class Application {
     private static final int NUM_OF_RECORD = 10;
 
     private static class ApplicationMessageHandlerImpl implements KafkaMessageHandler{
 
+        /**
+         * The Log.
+         */
         static Logger log = Logger.getLogger(ApplicationMessageHandlerImpl.class.getName());
 
         @Override
         public void processMessage(String topicName, ConsumerRecord<String, String> message) throws Exception {
             String source = KafkaMessageHandlerImpl.class.getName();
-            JSONObject obj = DataHelper.getMessageLogEntryJSON(source, topicName,message.key(),message.value());
+            JSONObject obj = MessageHelper.getMessageLogEntryJSON(source, topicName,message.key(),message.value());
             System.out.println(obj.toJSONString());
             log.info(obj.toJSONString());
         }
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws Exception the exception
+     */
     public static void main(String[] args) throws Exception {
         String errorStr = "ERROR: You need to declare the first parameter as Producer or Consumer, " +
                 "the second parameter is the topic name, " +
@@ -46,7 +55,7 @@ public class Application {
                 break;
             case "consumer":
                 System.out.println("Starting the Consumer\n");
-                SimpleConsumer.run(topic, Integer.parseInt(numOfRecs), new ApplicationMessageHandlerImpl() );
+                SimpleConsumer.run(topic, new ApplicationMessageHandlerImpl() );
                 break;
             default:
                 System.out.println(errorStr);
