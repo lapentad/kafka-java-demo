@@ -2,6 +2,8 @@
 
 echo compile...
 
+# pass <topicName> <numOfRecsToProduce> as args
+
 mvn -q clean compile exec:java \
- -Dexec.mainClass="com.baidubce.kafka.samples.Application" \
- -Dexec.args="$1"
+ -Dexec.mainClass="com.demo.kafka.Application" \
+ -Dexec.args="consumer $1 $2"
