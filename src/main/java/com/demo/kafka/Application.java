@@ -26,6 +26,15 @@ public class Application {
     }
 
     public static void main(String[] args) throws Exception {
+        String errorStr = "ERROR: You need to declare the first parameter as Producer or Consumer,\n" +
+                "the second parameter is the topic name,\n " +
+                "the third parameter is the number of records to process";
+
+        if (args.length != 3){
+            System.out.println(errorStr);
+            return;
+        }
+
         String mode = args[0];
         String topic = args[1];
         String numOfRecs = args[2];
@@ -40,9 +49,7 @@ public class Application {
                 SimpleConsumer.run(topic, Integer.parseInt(numOfRecs), new ApplicationMessageHandlerImpl() );
                 break;
             default:
-                System.out.println("ERROR: You need to declare the first parameter as Producer or Consumer,\n" +
-                        "the second parameter is the topic name,\n " +
-                        "the third parameter is the number of records to process");
+                System.out.println(errorStr);
         }
 
 
