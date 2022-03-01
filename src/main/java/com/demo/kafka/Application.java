@@ -26,8 +26,8 @@ public class Application {
     }
 
     public static void main(String[] args) throws Exception {
-        String errorStr = "ERROR: You need to declare the first parameter as Producer or Consumer,\n" +
-                "the second parameter is the topic name,\n " +
+        String errorStr = "ERROR: You need to declare the first parameter as Producer or Consumer, " +
+                "the second parameter is the topic name, " +
                 "the third parameter is the number of records to process";
 
         if (args.length != 3){
