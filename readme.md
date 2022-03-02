@@ -22,7 +22,7 @@ Verify the installation
 
 You'll get output similar to the following:
 
-```text
+```shell
 openjdk version "11.0.9.1" 2020-11-04
 OpenJDK Runtime Environment (build 11.0.9.1+1-Ubuntu-0ubuntu1.20.04)
 OpenJDK 64-Bit Server VM (build 11.0.9.1+1-Ubuntu-0ubuntu1.20.04, mixed mode, sharing)
@@ -38,7 +38,7 @@ Verify Maven is running:
 
 You'll get output similar to the following:
 
-```text
+```shell
 Apache Maven 3.6.3
 Maven home: /usr/share/maven
 Java version: 11.0.9.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
@@ -50,22 +50,22 @@ OS name: "linux", version: "5.4.0-29-generic", arch: "amd64", family: "unix"
 
 It's a cool daemonless container manager.
 
-```text
+```shell
 . /etc/os-release
 ```
-```text
+```shell
 echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
 ```
 
-```text
+```shell
 curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key" | sudo apt-key add -
 ```
 
-```text
+```shell
 sudo apt update -y
 ```
 
-```text
+```shell
 sudo apt -y install podman
 ```
 
@@ -75,7 +75,7 @@ Verify the installation:
 
 You'll get out put similar to the following:
 
-```text
+```shell
 Version:      3.4.2
 API Version:  3.4.2
 Go Version:   go1.16.6
@@ -86,7 +86,7 @@ OS/Arch:      linux/amd64
 
 # Install Kafka as a container
 
-```bash
+```shell
 podman run -it --name kafka-zkless -p 9092:9092 -e LOG_DIR=/tmp/logs quay.io/strimzi/kafka:latest-kafka-2.8.1-amd64 /bin/sh -c 'export CLUSTER_ID=$(bin/kafka-storage.sh random-uuid) && bin/kafka-storage.sh format -t $CLUSTER_ID -c config/kraft/server.properties && bin/kafka-server-start.sh config/kraft/server.properties'
 ```
 
@@ -94,9 +94,17 @@ podman run -it --name kafka-zkless -p 9092:9092 -e LOG_DIR=/tmp/logs quay.io/str
 
 `sudo ufw enable && sudo ufw allow 9092`
 
+# Running the unit tests
+
+Run the following command from the top level of the directory in which you installed the demonstration code.
+
+```shell
+mvn test
+```
+
 # Creating the streaming producer
 
-`TO BE PROVIDED`
+At the top level of the 
 
 # Creating a synchronous consumer
 

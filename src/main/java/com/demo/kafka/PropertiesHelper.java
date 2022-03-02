@@ -31,12 +31,6 @@ public class PropertiesHelper {
 
             //load a properties file from class path, inside static method
             props.load(input);
-
-            //get the property value and print it out
-            System.out.println(props.getProperty("default.topic"));
-            System.out.println(props.getProperty("boostrap.servers"));
-            System.out.println(props.getProperty("key.serializer"));
-            System.out.println(props.getProperty("value.serializer"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
