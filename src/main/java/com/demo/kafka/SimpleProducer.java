@@ -54,6 +54,15 @@ class SimpleProducer {
 
     }
 
+    public void runAlways() throws Exception {
+        while (true) {
+            String key = UUID.randomUUID().toString();
+            String message = MessageHelper.getRandomString();
+            this.send(key, message);
+            Thread.sleep(100);
+        }
+    }
+
     private String topicName = null;
 
     private void setTopicName(String topicName) {

@@ -28,17 +28,17 @@ public class ApplicationTest {
         //System.setErr(outContent);
     }
 
-    @Test
+    @Test (enabled=false)
     public void canRunApplicationForProducer() throws Exception {
         Application.main(new String[] {"producer","mycooltopic", "10"});
     }
 
-    @Test
+    @Test (enabled=false)
     public void canRunApplicationForConsumer() throws Exception {
         Application.main(new String[] {"consumer","mycooltopic", "10"});
     }
 
-    @Test
+    @Test (enabled=false)
     public void cannotRunApplicationForConsumer() throws Exception {
         Application.main(new String[] {});
         final String standardOutput = outContent.toString();

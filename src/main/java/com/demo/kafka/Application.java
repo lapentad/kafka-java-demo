@@ -36,26 +36,23 @@ public class Application {
      */
     public static void main(String[] args) throws Exception {
         String errorStr = "ERROR: You need to declare the first parameter as Producer or Consumer, " +
-                "the second parameter is the topic name, " +
-                "the third parameter is the number of records to process";
+                "the second parameter is the topic name";
 
-        if (args.length != 3){
+        if (args.length != 2){
             System.out.println(errorStr);
             return;
         }
 
         String mode = args[0];
         String topic = args[1];
-        String numOfRecs = args[2];
-
         switch(mode.toLowerCase(Locale.ROOT)) {
             case "producer":
                 System.out.println("Starting the Producer\n");
-                new SimpleProducer(topic).run(Integer.parseInt(numOfRecs));
+                new SimpleProducer(topic).runAlways();
                 break;
             case "consumer":
                 System.out.println("Starting the Consumer\n");
-                SimpleConsumer.run(topic, new ApplicationMessageHandlerImpl() );
+                SimpleConsumer.runAlways(topic, new ApplicationMessageHandlerImpl() );
                 break;
             default:
                 System.out.println(errorStr);
