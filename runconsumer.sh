@@ -6,4 +6,4 @@ echo compile...
 
 mvn -q clean compile exec:java \
  -Dexec.mainClass="com.demo.kafka.Application" \
- -Dexec.args="consumer $1 $2"
+ -Dexec.args="consumer $1"
