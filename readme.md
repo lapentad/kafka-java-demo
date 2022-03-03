@@ -1,5 +1,4 @@
 # Using Kafka with a Java Producer and Consumer
-
 - [Using Kafka with a Java Producer and Consumer](#using-kafka-with-a-java-producer-and-consumer)
 - [Install Java on RHEL 8](#install-java-on-rhel-8)
 - [Install Java on Ubuntu](#install-java-on-ubuntu)
@@ -10,9 +9,8 @@
 - [Install Kafka as a container](#install-kafka-as-a-container)
 - [Open up the Kafka port](#open-up-the-kafka-port)
 - [Running the unit tests](#running-the-unit-tests)
-- [Creating the streaming producer](#creating-the-streaming-producer)
-- [Creating a synchronous consumer](#creating-a-synchronous-consumer)
-- [Creating an asynchronous consumer](#creating-an-asynchronous-consumer)
+- [Starting the streaming producer](#starting-the-streaming-producer)
+- [Starting an asynchronous consumer](#starting-an-asynchronous-consumer)
 # Install Java on RHEL 8
 ```shell
 sudo yum install java-1.8.0-openjdk-devel
@@ -163,14 +161,23 @@ Run the following command from the top level of the directory in which you insta
 mvn test
 ```
 
-# Creating the streaming producer
+# Starting the streaming producer
 
-At the top level of the 
+In a new terminal window, go to the directory in which this code is installed and execute the following command:
 
-# Creating a synchronous consumer
+```shell
+sh ./runproducer.sh "mytopic"
+```
 
-`TO BE PROVIDED`
+You see a steady stream of screen output that is the log output of messages being sent to the topic named `mytopic`.
 
-# Creating an asynchronous consumer
+# Starting an asynchronous consumer
 
-`TO BE PROVIDED`
+In another terminal window, go to the directory in which this code is installed and execute the following command:
+
+```shell
+sh ./runconsumer.sh "mytopic"
+```
+
+You see a steady stream of screen output that is the log output of messages being retrieved from the topic named `mytopic`.
+
