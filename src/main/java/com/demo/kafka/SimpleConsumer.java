@@ -18,7 +18,8 @@ import static com.demo.kafka.PropertiesHelper.getProperties;
  * from a Kafka cluster. The class provides functionality for the
  * {@link org.apache.kafka.clients.consumer.KafkaConsumer}.
  */
-class SimpleConsumer {
+class SimpleConsumer extends AbstractSimpleKafka{
+
     private final int TIME_OUT_MS = 5000;
     private KafkaConsumer<String, String> kafkaConsumer = null;
     private final AtomicBoolean closed = new AtomicBoolean(false);
@@ -28,6 +29,15 @@ class SimpleConsumer {
      * The class's Log4J logger
      */
     static Logger log = Logger.getLogger(SimpleConsumer.class.getName());
+
+    /**
+     * Instantiates a new Abstract class SimpleKafka.
+     * <p>
+     * This abstract class's constructor provides graceful
+     * shutdown behavior for Kafka producers and consumers
+     */
+    public SimpleConsumer() throws Exception {
+    }
 
     /**
      * The run method retrieves a collection of ConsumerRecords. The number of
@@ -55,7 +65,7 @@ class SimpleConsumer {
         props.setProperty("max.poll.records", String.valueOf(numOfRecs));
 
         // create the consumer
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
         setKafkaConsumer(consumer);
         consumer.assign(Collections.singleton(new TopicPartition(topic, 0)));
 
@@ -78,13 +88,12 @@ class SimpleConsumer {
     }
 
     public void close() throws Exception {
-
         if (this.getKafkaConsumer() == null){
             log.info(MessageHelper.getSimpleJSONObject("The internal consumer is NULL"));
             return;
         }
         log.info(MessageHelper.getSimpleJSONObject("Closing consumer"));
-        this.getKafkaConsumer().close();
+        if( this.getKafkaConsumer() != null) this.getKafkaConsumer().close();
     }
 
     /**
@@ -101,7 +110,7 @@ class SimpleConsumer {
     public void runAlways(String topic, KafkaMessageHandler callback) throws Exception {
 
         Properties props = getProperties();
-        kafkaConsumer = new KafkaConsumer<String, String>(props);
+        kafkaConsumer = new KafkaConsumer<>(props);
         //keep running forever or until shutdown() is called from another thread.
         try {
             kafkaConsumer.subscribe(List.of(topic));
@@ -129,7 +138,7 @@ class SimpleConsumer {
     public void shutdown() throws Exception {
         closed.set(true);
         log.info(MessageHelper.getSimpleJSONObject("Shutting down consumer"));
-        kafkaConsumer.wakeup();
+        getKafkaConsumer().wakeup();
     }
 
     public KafkaConsumer<String, String> getKafkaConsumer() {

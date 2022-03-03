@@ -19,10 +19,6 @@ import static com.demo.kafka.PropertiesHelper.getProperties;
 
 public class SimpleProducerConsumerTest {
     private final String fixedTopicName = "mycooltopic";
-    @BeforeClass
-    public void before_class() throws Exception {
-        //String topicName = KafkaTopicHelper.createRandomTopic();
-    }
 
     @Test
     public void canGetFixedTopic() throws Exception {
