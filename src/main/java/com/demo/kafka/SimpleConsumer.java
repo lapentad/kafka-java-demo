@@ -108,14 +108,14 @@ class SimpleConsumer extends AbstractSimpleKafka{
      * @throws Exception the Exception that will get thrown upon an error
      */
     public void runAlways(String topic, KafkaMessageHandler callback) throws Exception {
-
         Properties props = getProperties();
         kafkaConsumer = new KafkaConsumer<>(props);
         //keep running forever or until shutdown() is called from another thread.
         try {
             kafkaConsumer.subscribe(List.of(topic));
             while (!closed.get()) {
-                ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(TIME_OUT_MS));
+                ConsumerRecords<String, String> records =
+                        kafkaConsumer.poll(Duration.ofMillis(TIME_OUT_MS));
                 if (records.count() == 0) {
                     log.info(MessageHelper.getSimpleJSONObject("No records retrieved"));
                 }

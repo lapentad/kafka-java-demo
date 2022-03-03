@@ -1,16 +1,35 @@
 # Using Kafka with a Java Producer and Consumer
 
 - [Using Kafka with a Java Producer and Consumer](#using-kafka-with-a-java-producer-and-consumer)
-- [Install Java](#install-java)
-- [Install Maven](#install-maven)
-- [Install Podman](#install-podman)
+- [Install Java on RHEL 8](#install-java-on-rhel-8)
+- [Install Java on Ubuntu](#install-java-on-ubuntu)
+- [Install Maven on RHEL](#install-maven-on-rhel)
+- [Install Maven on Ubuntu](#install-maven-on-ubuntu)
+- [Install Podman on RHEL 8](#install-podman-on-rhel-8)
+- [Install Podman on Ubuntu](#install-podman-on-ubuntu)
 - [Install Kafka as a container](#install-kafka-as-a-container)
 - [Open up the Kafka port](#open-up-the-kafka-port)
+- [Running the unit tests](#running-the-unit-tests)
 - [Creating the streaming producer](#creating-the-streaming-producer)
 - [Creating a synchronous consumer](#creating-a-synchronous-consumer)
 - [Creating an asynchronous consumer](#creating-an-asynchronous-consumer)
+# Install Java on RHEL 8
+```shell
+sudo yum install java-1.8.0-openjdk-devel
+```
+Verify the installation
 
-# Install Java
+```shell
+java --version
+```
+
+```text
+openjdk 11.0.13 2021-10-19
+OpenJDK Runtime Environment (build 11.0.13+8-Ubuntu-0ubuntu1.20.04)
+OpenJDK 64-Bit Server VM (build 11.0.13+8-Ubuntu-0ubuntu1.20.04, mixed mode, sharing)
+```
+
+# Install Java on Ubuntu
 
 `sudo apt-get update -y`
 
@@ -22,13 +41,28 @@ Verify the installation
 
 You'll get output similar to the following:
 
-```shell
+```text
 openjdk version "11.0.9.1" 2020-11-04
 OpenJDK Runtime Environment (build 11.0.9.1+1-Ubuntu-0ubuntu1.20.04)
 OpenJDK 64-Bit Server VM (build 11.0.9.1+1-Ubuntu-0ubuntu1.20.04, mixed mode, sharing)
 ```
 
-# Install Maven
+# Install Maven on RHEL
+
+```shell
+sudo dnf install maven -y
+```
+Verify the installation
+
+```text
+Apache Maven 3.6.3
+Maven home: /usr/share/maven
+Java version: 11.0.13, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "5.4.0-100-generic", arch: "amd64", family: "unix"
+```
+
+# Install Maven on Ubuntu
 
 `sudo apt-get install maven -y`
 
@@ -46,7 +80,34 @@ Default locale: en_US, platform encoding: UTF-8
 OS name: "linux", version: "5.4.0-29-generic", arch: "amd64", family: "unix"
 ```
 
-# Install Podman
+# Install Podman on RHEL 8
+
+```shell
+sudo dnf -y update
+```
+
+```shell
+sudo dnf module list | grep container-tools
+```
+
+```shell
+sudo dnf install -y @container-tools
+```
+Verify the installation:
+
+```shell
+podman version
+```
+You'll see output similar to the following:
+
+```shell
+Version:      3.4.2
+API Version:  3.4.2
+Go Version:   go1.16.6
+Built:        Thu Jan  1 00:00:00 1970
+OS/Arch:      linux/amd64
+```
+# Install Podman on Ubuntu
 
 It's a cool daemonless container manager.
 
