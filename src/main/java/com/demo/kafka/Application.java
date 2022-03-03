@@ -52,7 +52,7 @@ public class Application {
                 break;
             case "consumer":
                 System.out.println("Starting the Consumer\n");
-                SimpleConsumer.runAlways(topic, new ApplicationMessageHandlerImpl() );
+                new SimpleConsumer().runAlways(topic, new ApplicationMessageHandlerImpl() );
                 break;
             default:
                 System.out.println(errorStr);

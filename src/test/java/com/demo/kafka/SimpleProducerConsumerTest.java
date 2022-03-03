@@ -53,7 +53,7 @@ public class SimpleProducerConsumerTest {
         Thread.sleep(1000);
 
         //consume the messages
-        SimpleConsumer.run(fixedTopicName, new KafkaMessageTestHandlerImpl(), 4);
+        new SimpleConsumer().run(fixedTopicName, new KafkaMessageTestHandlerImpl(), 4);
     }
 
 
@@ -74,7 +74,7 @@ public class SimpleProducerConsumerTest {
         Thread.sleep(1000);
 
         //consume the messages
-        SimpleConsumer.run(fixedTopicName, new KafkaMessageTestHandlerImpl(), null);
+        new SimpleConsumer().run(fixedTopicName, new KafkaMessageTestHandlerImpl(), null);
     }
 
     @Test
@@ -85,14 +85,15 @@ public class SimpleProducerConsumerTest {
         Thread.sleep(3000);
 
         //create messages
-        int messageCount = 200;
+        int messageCount = 20;
         SimpleProducer producer = new SimpleProducer(fixedTopicName);
-        //producer.run(messageCount);
+        producer.run(messageCount);
 
         //Wait for Kafka to catch up before consuming messages
         Thread.sleep(1000);
 
-        //consume the messages
-        //SimpleConsumer.runAlways(fixedTopicName, new KafkaMessageTestHandlerImpl());
+        //create the consumer
+        SimpleConsumer consumer = new SimpleConsumer();
+        //consumer.runAlways(fixedTopicName, new KafkaMessageTestHandlerImpl());
     }
 }
