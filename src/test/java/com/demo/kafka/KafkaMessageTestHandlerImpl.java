@@ -8,8 +8,8 @@ import org.testng.Assert;
 public class KafkaMessageTestHandlerImpl implements KafkaMessageHandler{
 
     static Logger log = Logger.getLogger(KafkaMessageHandlerImpl.class.getName());
-
     private int numberOfCalls = 0;
+
     @Override
     public void processMessage(String topicName, ConsumerRecord<String, String> message) throws Exception {
         Assert.assertNotNull(message);

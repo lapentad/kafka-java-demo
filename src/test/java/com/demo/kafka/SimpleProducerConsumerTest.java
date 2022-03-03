@@ -1,21 +1,10 @@
 package com.demo.kafka;
 
 import org.apache.kafka.clients.admin.TopicListing;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.json.simple.JSONObject;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-import java.util.Collections;
-import java.util.Properties;
-import java.util.Random;
 
-import static com.demo.kafka.PropertiesHelper.getProperties;
 
 public class SimpleProducerConsumerTest {
     private final String fixedTopicName = "mycooltopic";

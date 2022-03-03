@@ -87,7 +87,7 @@ class SimpleConsumer extends AbstractSimpleKafka{
         consumer.close();
     }
 
-    public void close() throws Exception {
+    private void close() throws Exception {
         if (this.getKafkaConsumer() == null){
             log.info(MessageHelper.getSimpleJSONObject("The internal consumer is NULL"));
             return;

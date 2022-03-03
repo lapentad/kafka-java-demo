@@ -6,27 +6,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 
 public class ApplicationTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-
-
-    @Before
-    public void setUpStreams() throws UnsupportedEncodingException {
-        System.setOut(new PrintStream(outContent,true, StandardCharsets.UTF_8));
-        System.setErr(new PrintStream(errContent,true, StandardCharsets.UTF_8));
-    }
-
-    @After
-    public void cleanUpStreams() {
-        //System.setOut(outContent);
-        //System.setErr(outContent);
-    }
 
     @Test (enabled=false)
     public void canRunApplicationForProducer() throws Exception {
