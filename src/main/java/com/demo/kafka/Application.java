@@ -44,15 +44,15 @@ public class Application {
         }
 
         String mode = args[0];
-        String topic = args[1];
+        String topicName = args[1];
         switch(mode.toLowerCase(Locale.ROOT)) {
             case "producer":
                 System.out.println("Starting the Producer\n");
-                new SimpleProducer(topic).runAlways();
+                new SimpleProducer().runAlways(topicName, new ApplicationMessageHandlerImpl());
                 break;
             case "consumer":
                 System.out.println("Starting the Consumer\n");
-                new SimpleConsumer().runAlways(topic, new ApplicationMessageHandlerImpl() );
+                new SimpleConsumer().runAlways(topicName, new ApplicationMessageHandlerImpl() );
                 break;
             default:
                 System.out.println(errorStr);

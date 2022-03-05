@@ -18,16 +18,7 @@ import org.apache.log4j.Logger;
  * content onto the Kafka broker defined in {@link /src/resources/config.properties}
  */
 class SimpleProducer extends AbstractSimpleKafka {
-    /**
-     * Instantiates a new SimpleProducer object.
-     *
-     * @param topicName the topic name
-     * @throws Exception the exception
-     */
-    public SimpleProducer(String topicName) throws Exception {
-        super();
-        setTopicName(topicName);
-    }
+
 
     private KafkaProducer<String, String> kafkaProducer;
     private final AtomicBoolean closed = new AtomicBoolean(false);
@@ -36,18 +27,33 @@ class SimpleProducer extends AbstractSimpleKafka {
     private final Logger log = Logger.getLogger(SimpleProducer.class.getName());
 
     /**
-     * This method sends a limited number of messages
-     * with random string data to the Kafka broker
+     * Instantiates a new Abstract class, SimpleKafka.
+     * <p>
+     * This abstract class's constructor provides graceful
+     * shutdown behavior for Kafka producers and consumers
      *
+     * @throws Exception the exception
+     */
+    public SimpleProducer() throws Exception {
+    }
+
+    /**
+     * This method sends a limited number of messages
+     * with random string data to the Kafka broker.
+     *
+     * This method is provided for testing purpposes.
+     *
+     * @param topicName the name of the topic to where messages
+     *                  will be sent
      * @param numberOfMessages the number of messages to send
      * @throws Exception the exception that gets raised upon error
      */
-    public void run(int numberOfMessages) throws Exception {
+    public void run(String topicName, int numberOfMessages) throws Exception {
         int i = 0;
         while (i <= numberOfMessages) {
             String key = UUID.randomUUID().toString();
             String message = MessageHelper.getRandomString();
-            this.send(key, message);
+            this.send(topicName, key, message);
             i++;
             Thread.sleep(100);
         }
@@ -55,19 +61,20 @@ class SimpleProducer extends AbstractSimpleKafka {
     }
 
     /**
-     * The method runAlways() continuously creates and
-     * sends messages that contain random string data
-     * to the Kafka broker.
+     * The runAlways method sends a message to a topic.
      *
-     * @throws Exception the exception that get raised on error
+     * @param topicName    the name of topic to access
+     * @param callback the callback function that processes messages retrieved
+     *                 from Kafka
+     * @throws Exception the Exception that will get thrown upon an error
      */
-    public void runAlways() throws Exception {
+    public void runAlways(String topicName, KafkaMessageHandler callback) throws Exception {
         while (true) {
             String key = UUID.randomUUID().toString();
             //use the Message Helper to get a random string
             String message = MessageHelper.getRandomString();
             //send the message
-            this.send(key, message);
+            this.send(topicName, key, message);
             Thread.sleep(100);
         }
     }
@@ -87,12 +94,12 @@ class SimpleProducer extends AbstractSimpleKafka {
      * the topic that was declared in this class's
      * constructor.
      *
-     * @param key     the key value for the message
-     * @param message the content of the message
+     * @param topicName the name of the topic to where the message                   will be sent
+     * @param key       the key value for the message
+     * @param message   the content of the message
      * @throws Exception the exception that gets thrown upon error
      */
-    protected void send(String key, String message) throws Exception {
-        String topicName = this.getTopicName();
+    protected void send(String topicName, String key, String message) throws Exception {
         String source = SimpleProducer.class.getName();
 
         //create the ProducerRecord object which will

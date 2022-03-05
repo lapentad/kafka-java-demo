@@ -11,8 +11,6 @@ import java.util.*;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.demo.kafka.PropertiesHelper.getProperties;
-
 /**
  * The type SimpleConsumer is a class the demonstrates how to consume messages
  * from a Kafka cluster. The class provides functionality for the
@@ -56,7 +54,7 @@ class SimpleConsumer extends AbstractSimpleKafka{
      * @throws Exception the Exception that will get thrown upon an error
      */
     void run(String topic, KafkaMessageHandler callback, Integer numberOfRecords) throws Exception {
-        Properties props = getProperties();
+        Properties props = PropertiesHelper.getProperties();
         //See if the number of records is provided
         Optional<Integer> recs = Optional.ofNullable(numberOfRecords);
 
@@ -107,12 +105,12 @@ class SimpleConsumer extends AbstractSimpleKafka{
      *                 from Kafka
      * @throws Exception the Exception that will get thrown upon an error
      */
-    public void runAlways(String topic, KafkaMessageHandler callback) throws Exception {
-        Properties props = getProperties();
+    public void runAlways(String topicName, KafkaMessageHandler callback) throws Exception {
+        Properties props = PropertiesHelper.getProperties();
         kafkaConsumer = new KafkaConsumer<>(props);
         //keep running forever or until shutdown() is called from another thread.
         try {
-            kafkaConsumer.subscribe(List.of(topic));
+            kafkaConsumer.subscribe(List.of(topicName));
             while (!closed.get()) {
                 ConsumerRecords<String, String> records =
                         kafkaConsumer.poll(Duration.ofMillis(TIME_OUT_MS));
@@ -121,7 +119,7 @@ class SimpleConsumer extends AbstractSimpleKafka{
                 }
 
                 for (ConsumerRecord<String, String> record : records) {
-                    callback.processMessage(topic, record);
+                    callback.processMessage(topicName, record);
                 }
             }
         } catch (WakeupException e) {

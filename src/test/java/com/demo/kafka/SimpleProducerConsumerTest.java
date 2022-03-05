@@ -31,8 +31,8 @@ public class SimpleProducerConsumerTest {
 
         //create messages
         int messageCount = 10;
-        SimpleProducer producer = new SimpleProducer(fixedTopicName);
-        producer.run(messageCount);
+        SimpleProducer producer = new SimpleProducer();
+        producer.run(fixedTopicName, messageCount);
 
         //Wait for Kafka to catch up before consuming messages
         Thread.sleep(1000);
@@ -52,8 +52,8 @@ public class SimpleProducerConsumerTest {
 
         //create messages
         int messageCount = 10;
-        SimpleProducer producer = new SimpleProducer(fixedTopicName);
-        producer.run(messageCount);
+        SimpleProducer producer = new SimpleProducer();
+        producer.run(fixedTopicName, messageCount);
 
         //Wait for Kafka to catch up before consuming messages
         Thread.sleep(1000);
@@ -62,7 +62,15 @@ public class SimpleProducerConsumerTest {
         new SimpleConsumer().run(fixedTopicName, new KafkaMessageTestHandlerImpl(), null);
     }
 
-    @Test
+    /**
+     * This test is meant to run as one-off not as a part of
+     * a continuous testing process because the consumer keeps
+     * running forever. Set enabled to true if you want to run the
+     * test. Check the logs to verify that message consumption is\
+     * happening.
+     * @throws Exception The exception that gets thrown upon error
+     */
+    @Test (enabled=false)
     public void canProduceConsumeAlwaysStreamTest() throws Exception {
         KafkaTopicHelper.createFixedTopic(fixedTopicName);
 
@@ -71,14 +79,14 @@ public class SimpleProducerConsumerTest {
 
         //create messages
         int messageCount = 20;
-        SimpleProducer producer = new SimpleProducer(fixedTopicName);
-        producer.run(messageCount);
+        SimpleProducer producer = new SimpleProducer();
+        producer.run(fixedTopicName, messageCount);
 
         //Wait for Kafka to catch up before consuming messages
         Thread.sleep(1000);
 
         //create the consumer
         SimpleConsumer consumer = new SimpleConsumer();
-        //consumer.runAlways(fixedTopicName, new KafkaMessageTestHandlerImpl());
+        consumer.runAlways(fixedTopicName, new KafkaMessageTestHandlerImpl());
     }
 }
