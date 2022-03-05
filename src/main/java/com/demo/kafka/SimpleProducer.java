@@ -41,7 +41,7 @@ class SimpleProducer extends AbstractSimpleKafka {
      * This method sends a limited number of messages
      * with random string data to the Kafka broker.
      *
-     * This method is provided for testing purpposes.
+     * This method is provided for testing purposes.
      *
      * @param topicName the name of the topic to where messages
      *                  will be sent

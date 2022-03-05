@@ -45,7 +45,7 @@ class SimpleConsumer extends AbstractSimpleKafka{
      * This method is provided as a convenience for testing purposes. It does
      * not use the KafkaConsumer internal to the class.
      *
-     * @param topic    the topic to access
+     * @param topicName    the topic to access
      * @param callback the callback function that processes messages retrieved
      *                 from Kafka
      * @param numberOfRecords Optional, the max number of records to retrieve during the
@@ -53,7 +53,7 @@ class SimpleConsumer extends AbstractSimpleKafka{
      *                        value defined in max.poll.records as defined in config.properties
      * @throws Exception the Exception that will get thrown upon an error
      */
-    void run(String topic, KafkaMessageHandler callback, Integer numberOfRecords) throws Exception {
+    void run(String topicName, KafkaMessageHandler callback, Integer numberOfRecords) throws Exception {
         Properties props = PropertiesHelper.getProperties();
         //See if the number of records is provided
         Optional<Integer> recs = Optional.ofNullable(numberOfRecords);
@@ -64,8 +64,10 @@ class SimpleConsumer extends AbstractSimpleKafka{
 
         // create the consumer
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+
+        //make the consumer available for graceful shutdown
         setKafkaConsumer(consumer);
-        consumer.assign(Collections.singleton(new TopicPartition(topic, 0)));
+        consumer.assign(Collections.singleton(new TopicPartition(topicName, 0)));
 
         int recNum = numOfRecs;
         while (recNum > 0) {
@@ -77,7 +79,7 @@ class SimpleConsumer extends AbstractSimpleKafka{
             }
 
             for (ConsumerRecord<String, String> record : records) {
-                callback.processMessage(topic, record);
+                callback.processMessage(topicName, record);
                 recNum--;
             }
         }
@@ -100,20 +102,22 @@ class SimpleConsumer extends AbstractSimpleKafka{
      * the Kafka broker is defined by the property max.poll.records as published by
      * the class {@link com.demo.kafka.PropertiesHelper} object
      *
-     * @param topic    the topic to access
+     * @param topicName    the topic to access
      * @param callback the callback function that processes messages retrieved
      *                 from Kafka
      * @throws Exception the Exception that will get thrown upon an error
      */
     public void runAlways(String topicName, KafkaMessageHandler callback) throws Exception {
         Properties props = PropertiesHelper.getProperties();
-        kafkaConsumer = new KafkaConsumer<>(props);
+        //make the consumer available for graceful shutdown
+        setKafkaConsumer(new KafkaConsumer<>(props));
+
         //keep running forever or until shutdown() is called from another thread.
         try {
-            kafkaConsumer.subscribe(List.of(topicName));
+            getKafkaConsumer().subscribe(List.of(topicName));
             while (!closed.get()) {
                 ConsumerRecords<String, String> records =
-                        kafkaConsumer.poll(Duration.ofMillis(TIME_OUT_MS));
+                        getKafkaConsumer().poll(Duration.ofMillis(TIME_OUT_MS));
                 if (records.count() == 0) {
                     log.info(MessageHelper.getSimpleJSONObject("No records retrieved"));
                 }

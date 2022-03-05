@@ -44,7 +44,7 @@ public abstract class AbstractSimpleKafka {
      * behavior to produce or consume messages from a Kafka
      * broker
      *
-     * @param topic    the topicName to execute against
+     * @param topicName    the topicName to execute against
      * @param callback a callback function to provide processing
      *                 logic after a message is produced or after
      *                 a message is consumed

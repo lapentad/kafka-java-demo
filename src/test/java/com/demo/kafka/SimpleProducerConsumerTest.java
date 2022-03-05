@@ -70,7 +70,7 @@ public class SimpleProducerConsumerTest {
      * happening.
      * @throws Exception The exception that gets thrown upon error
      */
-    @Test (enabled=false)
+    @Test (enabled=true)
     public void canProduceConsumeAlwaysStreamTest() throws Exception {
         KafkaTopicHelper.createFixedTopic(fixedTopicName);
 
