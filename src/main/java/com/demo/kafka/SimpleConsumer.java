@@ -29,7 +29,7 @@ class SimpleConsumer extends AbstractSimpleKafka{
     static Logger log = Logger.getLogger(SimpleConsumer.class.getName());
 
     /**
-     * Instantiates a new Abstract class SimpleKafka.
+     * Instantiates a new instance based on Abstract class SimpleKafka.
      * <p>
      * This abstract class's constructor provides graceful
      * shutdown behavior for Kafka producers and consumers

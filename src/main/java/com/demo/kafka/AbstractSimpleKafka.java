@@ -32,7 +32,7 @@ public abstract class AbstractSimpleKafka {
     private final Logger log = Logger.getLogger(AbstractSimpleKafka.class.getName());
 
     /**
-     * Provides inherited classes will provide the behavior necessary
+     * The inherited classes will provide the behavior necessary
      * to shut down gracefully.
      *
      * @throws Exception the exception that get thrown upon error
