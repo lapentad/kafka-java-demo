@@ -7,11 +7,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * KafkaTopicHelper is a class the provides helper functions
+ * related to a Kafka topic
+ */
 public class KafkaTopicHelper {
 
+    /**
+     * Creates a topic according to the name provided by the
+     * parameter topicName
+     *
+     * @param topicName the name of the topic to create
+     * @return a {@link org.apache.kafka.clients.admin.TopicListing} object
+     * @throws Exception the exception
+     */
     public static TopicListing createFixedTopic(String topicName) throws Exception {
-
-        TopicListing topicListing = null;
 
         Properties props = PropertiesHelper.getProperties();
         Admin admin = Admin.create(props);
@@ -40,6 +50,13 @@ public class KafkaTopicHelper {
 
         return null;
     }
+
+    /**
+     * Create random topic string.
+     *
+     * @return the string
+     * @throws Exception the exception
+     */
     public static String createRandomTopic() throws Exception {
 
         Properties props = PropertiesHelper.getProperties();

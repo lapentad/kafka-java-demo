@@ -5,6 +5,14 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 
+/**
+ * The class KafkaMessageTestHandlerImpl is the callback functions that's
+ * using when running producer and consumer tests that require a callback
+ * function.
+ *
+ * The class runs assertions against the message passed to the method named
+ * processMessage()
+ */
 public class KafkaMessageTestHandlerImpl implements KafkaMessageHandler{
 
     static Logger log = Logger.getLogger(KafkaMessageHandlerImpl.class.getName());
@@ -30,10 +38,20 @@ public class KafkaMessageTestHandlerImpl implements KafkaMessageHandler{
         log.info(obj.toJSONString());
     }
 
+    /**
+     * Gets number of calls for producer or consumer to make
+     *
+     * @return the number of calls
+     */
     public int getNumberOfCalls() {
         return numberOfCalls;
     }
 
+    /**
+     * Sets number of calls for producer or consumer to make
+     *
+     * @param numberOfCalls the number of calls
+     */
     public void setNumberOfCalls(int numberOfCalls) {
         this.numberOfCalls = numberOfCalls;
     }
