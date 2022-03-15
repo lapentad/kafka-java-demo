@@ -39,7 +39,7 @@ public class KafkaMessageTestHandlerImpl implements KafkaMessageHandler{
     }
 
     /**
-     * Gets number of calls for producer or consumer to make
+     * Gets number of calls for the producer or consumer to make
      *
      * @return the number of calls
      */
@@ -48,7 +48,7 @@ public class KafkaMessageTestHandlerImpl implements KafkaMessageHandler{
     }
 
     /**
-     * Sets number of calls for producer or consumer to make
+     * Sets number of calls for the producer or consumer to make
      *
      * @param numberOfCalls the number of calls
      */

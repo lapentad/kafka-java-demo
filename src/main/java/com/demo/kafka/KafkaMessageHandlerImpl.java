@@ -5,13 +5,12 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 
 /**
- * The type Kafka message handler.
+ * An implementation of the interface {@link com.demo.kafka.KafkaMessageHandler}.
+ *
+ * The class implements the processMessage() method. Typically, this class is used
+ * to supply callback behavior for this project's producers and consumers.
  */
 public class KafkaMessageHandlerImpl implements KafkaMessageHandler{
-
-    /**
-     * The Log.
-     */
     static Logger log = Logger.getLogger(KafkaMessageHandlerImpl.class.getName());
 
     @Override
