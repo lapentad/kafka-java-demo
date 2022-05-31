@@ -46,11 +46,7 @@ sudo dnf -y update
 ```
 
 ```shell
-sudo dnf module list | grep container-tools
-```
-
-```shell
-sudo dnf install -y @container-tools
+sudo dnf install -y podman
 ```
 Verify the installation:
 
