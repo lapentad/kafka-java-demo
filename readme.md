@@ -4,7 +4,7 @@
 - [Install Maven on RHEL 8](#install-maven-on-rhel)
 - [Install Podman on RHEL 8](#install-podman-on-rhel-8)
 - [Install Kafka as a container](#install-kafka-as-a-container)
-- [Open up the Kafka port using the `ufw` utility](#[open-up-the-kafka-port](#open-up-the-kafka-port-using-the-ufw-utility))
+- [Open up the Kafka port using ufw](#[open-up-the-kafka-port](#open-up-the-kafka-port-using-the-ufw-utility))
 - [Running the unit tests](#running-the-unit-tests)
 - [Starting the streaming producer](#starting-the-streaming-producer)
 - [Starting an asynchronous consumer](#starting-an-asynchronous-consumer)
