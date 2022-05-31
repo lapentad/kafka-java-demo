@@ -1,5 +1,4 @@
 # Using Kafka with a Java Producer and Consumer
-- [Using Kafka with a Java Producer and Consumer](#using-kafka-with-a-java-producer-and-consumer)
 - [Install Java on RHEL 8](#install-java-on-rhel-8)
 - [Install Maven on RHEL 8](#install-maven-on-rhel)
 - [Install Podman on RHEL 8](#install-podman-on-rhel-8)
