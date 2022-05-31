@@ -32,12 +32,18 @@ sudo dnf install maven -y
 ```
 Verify the installation
 
+```
+mvn --version
+```
+
+You'll get output similar to the following:
+
 ```text
-Apache Maven 3.6.3
+Apache Maven 3.6.3 (Red Hat 3.6.3-13)
 Maven home: /usr/share/maven
-Java version: 11.0.13, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
+Java version: 11.0.15, vendor: Red Hat, Inc., runtime: /usr/lib/jvm/java-11-openjdk-11.0.15.0.10-1.fc35.x86_64
 Default locale: en_US, platform encoding: UTF-8
-OS name: "linux", version: "5.4.0-100-generic", arch: "amd64", family: "unix"
+OS name: "linux", version: "5.14.10-300.fc35.x86_64", arch: "amd64", family: "unix"
 ```
 
 # Install Podman on RHEL 8 or Fedora
