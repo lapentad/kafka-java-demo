@@ -107,3 +107,10 @@ sh ./runconsumer.sh "mytopic"
 
 You see a steady stream of screen output that is the log output of messages being retrieved from the topic named `mytopic`.
 
+A sample of the output is as follows:
+
+```
+2022-05-31 09:45:53 DEBUG NetworkClient:521 - [Consumer clientId=consumer-test-group-1, groupId=test-group] Sending FETCH request with header RequestHeader(apiKey=FETCH, apiVersion=12, clientId=consumer-test-group-1, correlationId=86) and timeout 30000 to node 1: FetchRequestData(clusterId=null, replicaId=-1, maxWaitMs=500, minBytes=1, maxBytes=52428800, isolationLevel=0, sessionId=376433637, sessionEpoch=62, topics=[FetchTopic(topic='mytopic', topicId=vCvEuX_0QHWdVP5mKeeX4w, partitions=[FetchPartition(partition=0, currentLeaderEpoch=0, fetchOffset=787, lastFetchedEpoch=-1, logStartOffset=-1, partitionMaxBytes=1048576)])], forgottenTopicsData=[], rackId='')
+{"bootstrapServers":"localhost:9092","topic":"mytopic","source":"com.demo.kafka.KafkaMessageHandlerImpl","message":"4GPeV7Igy9","key":"84097ac3-f488-4595-86cc-dcb69bce2eda"}
+```
+
