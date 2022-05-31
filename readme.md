@@ -4,10 +4,11 @@
 - [Install Maven on RHEL 8](#install-maven-on-rhel)
 - [Install Podman on RHEL 8](#install-podman-on-rhel-8)
 - [Install Kafka as a container](#install-kafka-as-a-container)
-- [Open up the Kafka port using ufw](#open-up-the-kafka-port-using-the-ufw-utility)
 - [Running the unit tests](#running-the-unit-tests)
 - [Starting the streaming producer](#starting-the-streaming-producer)
 - [Starting an asynchronous consumer](#starting-an-asynchronous-consumer)
+- [Open up the Kafka port using ufw](#open-up-the-kafka-port-using-the-ufw-utility)
+
 # Install Java on RHEL 8 or Fedora
 ```shell
 sudo yum install java-1.8.0-openjdk-devel
@@ -69,16 +70,6 @@ OS/Arch:      linux/amd64
 podman run -it --name kafka-zkless -p 9092:9092 -e LOG_DIR=/tmp/logs quay.io/strimzi/kafka:latest-kafka-2.8.1-amd64 /bin/sh -c 'export CLUSTER_ID=$(bin/kafka-storage.sh random-uuid) && bin/kafka-storage.sh format -t $CLUSTER_ID -c config/kraft/server.properties && bin/kafka-server-start.sh config/kraft/server.properties'
 ```
 
-# Open up the Kafka port using the `ufw` utility
-
-Run ...
-
-`sudo dnf install ufw`
-
-Then ...
-
-`sudo ufw enable && sudo ufw allow 9092`
-
 # Running the unit tests
 
 Navigate to the working directory where you installed the the project source code from GitHub:
@@ -131,4 +122,16 @@ A sample of the output is as follows:
 2022-05-31 09:45:53 DEBUG NetworkClient:521 - [Consumer clientId=consumer-test-group-1, groupId=test-group] Sending FETCH request with header RequestHeader(apiKey=FETCH, apiVersion=12, clientId=consumer-test-group-1, correlationId=86) and timeout 30000 to node 1: FetchRequestData(clusterId=null, replicaId=-1, maxWaitMs=500, minBytes=1, maxBytes=52428800, isolationLevel=0, sessionId=376433637, sessionEpoch=62, topics=[FetchTopic(topic='mytopic', topicId=vCvEuX_0QHWdVP5mKeeX4w, partitions=[FetchPartition(partition=0, currentLeaderEpoch=0, fetchOffset=787, lastFetchedEpoch=-1, logStartOffset=-1, partitionMaxBytes=1048576)])], forgottenTopicsData=[], rackId='')
 {"bootstrapServers":"localhost:9092","topic":"mytopic","source":"com.demo.kafka.KafkaMessageHandlerImpl","message":"4GPeV7Igy9","key":"84097ac3-f488-4595-86cc-dcb69bce2eda"}
 ```
+
+# Open up the Kafka port using the `ufw` utility
+
+Execute these commands if you want to access the Kafka cluster externally from a the remote machine using the IP address of the machine on which you are running Kakfa.
+
+Run ...
+
+`sudo dnf install ufw`
+
+Then ...
+
+`sudo ufw enable && sudo ufw allow 9092`
 
