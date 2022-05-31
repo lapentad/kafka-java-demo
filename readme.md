@@ -1,17 +1,14 @@
 # Using Kafka with a Java Producer and Consumer
 - [Using Kafka with a Java Producer and Consumer](#using-kafka-with-a-java-producer-and-consumer)
 - [Install Java on RHEL 8](#install-java-on-rhel-8)
-- [Install Java on Ubuntu](#install-java-on-ubuntu)
-- [Install Maven on RHEL](#install-maven-on-rhel)
-- [Install Maven on Ubuntu](#install-maven-on-ubuntu)
+- [Install Maven on RHEL 8](#install-maven-on-rhel)
 - [Install Podman on RHEL 8](#install-podman-on-rhel-8)
-- [Install Podman on Ubuntu](#install-podman-on-ubuntu)
 - [Install Kafka as a container](#install-kafka-as-a-container)
 - [Open up the Kafka port](#open-up-the-kafka-port)
 - [Running the unit tests](#running-the-unit-tests)
 - [Starting the streaming producer](#starting-the-streaming-producer)
 - [Starting an asynchronous consumer](#starting-an-asynchronous-consumer)
-# Install Java on RHEL 8
+# Install Java on RHEL 8 or Fedora
 ```shell
 sudo yum install java-1.8.0-openjdk-devel
 ```
@@ -27,25 +24,7 @@ OpenJDK Runtime Environment (build 11.0.13+8-Ubuntu-0ubuntu1.20.04)
 OpenJDK 64-Bit Server VM (build 11.0.13+8-Ubuntu-0ubuntu1.20.04, mixed mode, sharing)
 ```
 
-# Install Java on Ubuntu
-
-`sudo apt-get update -y`
-
-`sudo apt-get install default-jdk -y`
-
-Verify the installation
-
-`java -version`
-
-You'll get output similar to the following:
-
-```text
-openjdk version "11.0.9.1" 2020-11-04
-OpenJDK Runtime Environment (build 11.0.9.1+1-Ubuntu-0ubuntu1.20.04)
-OpenJDK 64-Bit Server VM (build 11.0.9.1+1-Ubuntu-0ubuntu1.20.04, mixed mode, sharing)
-```
-
-# Install Maven on RHEL
+# Install Maven on RHEL or Fedora
 
 ```shell
 sudo dnf install maven -y
@@ -60,25 +39,7 @@ Default locale: en_US, platform encoding: UTF-8
 OS name: "linux", version: "5.4.0-100-generic", arch: "amd64", family: "unix"
 ```
 
-# Install Maven on Ubuntu
-
-`sudo apt-get install maven -y`
-
-Verify Maven is running:
-
-`mvn -version`
-
-You'll get output similar to the following:
-
-```shell
-Apache Maven 3.6.3
-Maven home: /usr/share/maven
-Java version: 11.0.9.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
-Default locale: en_US, platform encoding: UTF-8
-OS name: "linux", version: "5.4.0-29-generic", arch: "amd64", family: "unix"
-```
-
-# Install Podman on RHEL 8
+# Install Podman on RHEL 8 or Fedora
 
 ```shell
 sudo dnf -y update
@@ -105,43 +66,6 @@ Go Version:   go1.16.6
 Built:        Thu Jan  1 00:00:00 1970
 OS/Arch:      linux/amd64
 ```
-# Install Podman on Ubuntu
-
-It's a cool daemonless container manager.
-
-```shell
-. /etc/os-release
-```
-```shell
-echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
-```
-
-```shell
-curl -L "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key" | sudo apt-key add -
-```
-
-```shell
-sudo apt update -y
-```
-
-```shell
-sudo apt -y install podman
-```
-
-Verify the installation:
-
-`podman version`
-
-You'll get out put similar to the following:
-
-```shell
-Version:      3.4.2
-API Version:  3.4.2
-Go Version:   go1.16.6
-Built:        Thu Jan  1 00:00:00 1970
-OS/Arch:      linux/amd64
-```
-
 
 # Install Kafka as a container
 
