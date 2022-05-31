@@ -81,10 +81,28 @@ Then ...
 
 # Running the unit tests
 
-Run the following command from the top level of the directory in which you installed the demonstration code.
+Navigate to the working directory where you installed the the project source code from GitHub:
+
+`/path/to/kafka-java-demo`
+
+Run the following command from the top level of the directory in which you installed the demonstration code. The code runs the unit tests associated with the project. You'll see a steady stream of output produced by the various tests indicating that the Kafka cluster is up and running.
 
 ```shell
 mvn test
+```
+
+The following is a sample of output emitted by the test.
+
+```
+2022-05-31 09:50:11 INFO  KafkaMessageHandlerImpl:34 - {"bootstrapServers":"localhost:9092","topic":"mycooltopic","source":"com.demo.kafka.KafkaMessageHandlerImpl","message":"3mWbku7zXv","key":"fbdd1525-cab2-47fa-b553-8adf62adae19"}
+2022-05-31 09:50:11 INFO  KafkaMessageHandlerImpl:38 - {"message":"The number of calls is: 1"}
+2022-05-31 09:50:11 INFO  KafkaMessageHandlerImpl:34 - {"bootstrapServers":"localhost:9092","topic":"mycooltopic","source":"com.demo.kafka.KafkaMessageHandlerImpl","message":"m5e5Q9kTmL","key":"21d16306-dbf0-446e-b612-dd8d8c1c2d22"}
+2022-05-31 09:50:11 INFO  KafkaMessageHandlerImpl:38 - {"message":"The number of calls is: 2"}
+2022-05-31 09:50:11 INFO  KafkaMessageHandlerImpl:34 - {"bootstrapServers":"localhost:9092","topic":"mycooltopic","source":"com.demo.kafka.KafkaMessageHandlerImpl","message":"exDFhoX2t3","key":"d93595d9-3759-4c33-bba8-3fba56779e8e"}
+2022-05-31 09:50:11 INFO  KafkaMessageHandlerImpl:38 - {"message":"The number of calls is: 3"}
+2022-05-31 09:50:11 INFO  KafkaMessageHandlerImpl:34 - {"bootstrapServers":"localhost:9092","topic":"mycooltopic","source":"com.demo.kafka.KafkaMessageHandlerImpl","message":"qmRfhviJ3c","key":"ae89dd45-45ff-4417-a146-9bfe03ecbb4e"}
+2022-05-31 09:50:11 INFO  KafkaMessageHandlerImpl:38 - {"message":"The number of calls is: 4"}
+
 ```
 
 # Starting the streaming producer
