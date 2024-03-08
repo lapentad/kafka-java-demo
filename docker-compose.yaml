@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  kafka-zkless:
+    image: quay.io/strimzi/kafka:latest-kafka-2.8.1-amd64
+    container_name: kafka-zkless
+    ports:
+      - "9092:9092"
+    environment:
+      - LOG_DIR=/tmp/logs
+    command: /bin/sh -c 'export CLUSTER_ID=$(bin/kafka-storage.sh random-uuid) && bin/kafka-storage.sh format -t $CLUSTER_ID -c config/kraft/server.properties && bin/kafka-server-start.sh config/kraft/server.properties'
+    tty: true
+    stdin_open: true
