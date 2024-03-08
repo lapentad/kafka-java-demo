@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
  */
 class SimpleProducer extends AbstractSimpleKafka {
 
-
+    private final int TIME = 1000;
     private KafkaProducer<String, String> kafkaProducer;
     private final AtomicBoolean closed = new AtomicBoolean(false);
 
@@ -55,7 +55,7 @@ class SimpleProducer extends AbstractSimpleKafka {
             String message = MessageHelper.getRandomString();
             this.send(topicName, key, message);
             i++;
-            Thread.sleep(100);
+            Thread.sleep(TIME);
         }
         this.shutdown();
     }
@@ -75,7 +75,7 @@ class SimpleProducer extends AbstractSimpleKafka {
             String message = MessageHelper.getRandomString();
             //send the message
             this.send(topicName, key, message);
-            Thread.sleep(100);
+            Thread.sleep(TIME);
         }
     }
 

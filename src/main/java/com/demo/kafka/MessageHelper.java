@@ -39,6 +39,7 @@ public class MessageHelper {
      * @return the message log entry json
      * @throws Exception the exception
      */
+    @SuppressWarnings("unchecked") //Using only strings
     public static JSONObject getMessageLogEntryJSON(String source, String topic, String key, String message) throws Exception {
         JSONObject obj = new JSONObject();
         String bootstrapServers = getProperties().getProperty("bootstrap.servers");
@@ -58,9 +59,10 @@ public class MessageHelper {
      * @return the simple json object
      * @throws Exception the exception
      */
+    @SuppressWarnings("unchecked")
     public static JSONObject getSimpleJSONObject(String message) throws Exception {
         JSONObject obj = new JSONObject();
-        String bootstrapServers = getProperties().getProperty("bootstrap.servers");
+        //String bootstrapServers = getProperties().getProperty("bootstrap.servers");
         obj.put("message", message);
         return obj;
     }
