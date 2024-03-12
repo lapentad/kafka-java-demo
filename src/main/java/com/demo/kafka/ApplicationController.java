@@ -40,7 +40,7 @@ public class ApplicationController {
     }
 
     @Async
-    @GetMapping("/startProducer/{topicName}")
+    @GetMapping("/startConsumer/{topicName}")
     public CompletableFuture<String> startConsumer(@PathVariable("topicName") String topicName) {
         try {
             Thread thread = new Thread(() -> {
