@@ -11,15 +11,24 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * The type SimpleProducer is a wrapper class for {@link org.apache.kafka.clients.producer.KafkaProducer}.
  * The object publishes methods that send messages that have random string
  * content onto the Kafka broker defined in {@link /src/resources/config.properties}
  */
+@Component
 class SimpleProducer extends AbstractSimpleKafka {
+    
+    private int TIME;
 
-    private final int TIME = 1000;
+    @Value("${spring.application.time}")
+    public void setTime(int time) {
+        this.TIME = time;
+    }
+
     private KafkaProducer<String, String> kafkaProducer;
     private final AtomicBoolean closed = new AtomicBoolean(false);
 

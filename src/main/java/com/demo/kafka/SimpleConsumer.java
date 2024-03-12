@@ -7,6 +7,9 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.errors.WakeupException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -16,16 +19,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * from a Kafka cluster. The class provides functionality for the
  * {@link org.apache.kafka.clients.consumer.KafkaConsumer}.
  */
+@Component
 class SimpleConsumer extends AbstractSimpleKafka{
-
-    private final int TIME_OUT_MS = 5000;
+    
     private KafkaConsumer<String, String> kafkaConsumer = null;
     private final AtomicBoolean closed = new AtomicBoolean(false);
 
+    private int TIME_OUT_MS;
 
-    /**
-     * The class's Log4J logger
-     */
+    @Value("${spring.application.time_out_ms}")
+    public void setTime(int time_out_ms) {
+        this.TIME_OUT_MS = time_out_ms;
+    }
+
     private static final Logger log = LoggerFactory.getLogger(SimpleConsumer.class);
 
     /**

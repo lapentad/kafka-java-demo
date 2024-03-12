@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: restkafkademo
+    time: 5000
+    time_out_ms: 10000
+
