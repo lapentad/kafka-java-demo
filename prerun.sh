@@ -1,7 +1,7 @@
 #!/bin/bash
 
 checkJava() {
-    if ! command -v java &> /dev/null; then
+    if ! command -v java >/dev/null 2>&1; then
         echo "Java is not installed. Please install Java."
         echo "sudo apt install default-jdk"
         exit 1
@@ -11,17 +11,17 @@ checkJava() {
 }
 
 checkMaven() {
-    if ! command -v mvn &> /dev/null; then
+    if mvn -v >/dev/null 2>&1; then
+        echo "Maven is installed."
+    else
         echo "Maven is not installed. Please install Maven."
         echo "sudo apt install maven"
         exit 1
-    else
-        echo "Maven is installed."
     fi
 }
 
 checkDocker() {
-    if ! command -v docker &> /dev/null; then
+    if ! docker -v > /dev/null 2>&1; then
         echo "Docker is not installed. Please install Docker."
         echo "sudo apt-get update"
         echo "sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release"
