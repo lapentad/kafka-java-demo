@@ -1,12 +1,15 @@
 package com.demo.kafka;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * The type Abstract class SimpleKafka
  */
 public abstract class AbstractSimpleKafka {
+    private static final Logger log = LoggerFactory.getLogger(AbstractSimpleKafka.class);
+
     /**
      * Instantiates a new Abstract class, SimpleKafka.
      * <p>
@@ -27,9 +30,9 @@ public abstract class AbstractSimpleKafka {
             }
         });
 
-        log.info(MessageHelper.getSimpleJSONObject("Created the Shutdown Hook"));
+        log.info(MessageHelper.getSimpleJSONObject("Created the Shutdown Hook").toJSONString());
     }
-    private final Logger log = Logger.getLogger(AbstractSimpleKafka.class.getName());
+    
 
     /**
      * The inherited classes will provide the behavior necessary

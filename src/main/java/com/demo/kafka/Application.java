@@ -1,23 +1,24 @@
 package com.demo.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.json.simple.JSONObject;
 
-import java.util.Locale;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * The type Application.
- */
+@SpringBootApplication
+@RestController
 public class Application {
-    private static final int NUM_OF_RECORD = 10;
+    //private static final int NUM_OF_RECORD = 10;
 
     private static class ApplicationMessageHandlerImpl implements KafkaMessageHandler{
 
-        /**
-         * The Log.
-         */
-        static Logger log = Logger.getLogger(ApplicationMessageHandlerImpl.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(ApplicationMessageHandlerImpl.class);
 
         @Override
         public void processMessage(String topicName, ConsumerRecord<String, String> message) throws Exception {
@@ -28,36 +29,34 @@ public class Application {
         }
     }
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     * @throws Exception the exception
-     */
+    //private SimpleProducer producer;
+    //private SimpleConsumer consumer;
+    //private ApplicationMessageHandlerImpl messageHandler = new ApplicationMessageHandlerImpl();
+
+
     public static void main(String[] args) throws Exception {
-        String errorStr = "ERROR: You need to declare the first parameter as Producer or Consumer, " +
-                "the second parameter is the topic name";
+        SpringApplication.run(Application.class, args);
+    }
+    
+    @GetMapping("/")
+	public String index() {
+		return "Greetings from Spring Boot!";
+	}
 
-        if (args.length != 2){
-            System.out.println(errorStr);
-            return;
-        }
-
-        String mode = args[0];
-        String topicName = args[1];
-        switch(mode.toLowerCase(Locale.ROOT)) {
-            case "producer":
-                System.out.println("Starting the Producer\n");
-                new SimpleProducer().runAlways(topicName, new ApplicationMessageHandlerImpl());
-                break;
-            case "consumer":
-                System.out.println("Starting the Consumer\n");
-                new SimpleConsumer().runAlways(topicName, new ApplicationMessageHandlerImpl() );
-                break;
-            default:
-                System.out.println(errorStr);
-        }
+    @GetMapping("/startProducer/{topicName}")
+    public String startProducer(@PathVariable String topicName) throws Exception {
+        var producer = new SimpleProducer();
+        var messageHandler = new ApplicationMessageHandlerImpl(); 
+        producer.runAlways(topicName, messageHandler);
+        return "Producer started for topic: " + topicName;
+    }
 
 
+    @GetMapping("/startConsumer/{topicName}")
+    public String startConsumer(@PathVariable String topicName) throws Exception {
+        var consumer = new SimpleConsumer();
+        var messageHandler = new ApplicationMessageHandlerImpl(); 
+        consumer.runAlways(topicName, messageHandler);
+        return "Consumer started for topic: " + topicName; 
     }
 }

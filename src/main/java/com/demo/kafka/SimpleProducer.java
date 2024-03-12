@@ -9,8 +9,8 @@ import org.json.simple.JSONObject;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The type SimpleProducer is a wrapper class for {@link org.apache.kafka.clients.producer.KafkaProducer}.
@@ -24,7 +24,7 @@ class SimpleProducer extends AbstractSimpleKafka {
     private final AtomicBoolean closed = new AtomicBoolean(false);
 
 
-    private final Logger log = Logger.getLogger(SimpleProducer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SimpleProducer.class);
 
     /**
      * Instantiates a new Abstract class, SimpleKafka.
@@ -125,7 +125,7 @@ class SimpleProducer extends AbstractSimpleKafka {
 
     public void shutdown() throws Exception {
         closed.set(true);
-        log.info(MessageHelper.getSimpleJSONObject("Shutting down producer"));
+        log.info(MessageHelper.getSimpleJSONObject("Shutting down producer").toJSONString());
         getKafkaProducer().close();
     }
 }

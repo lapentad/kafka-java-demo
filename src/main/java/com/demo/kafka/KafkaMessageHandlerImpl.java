@@ -1,7 +1,8 @@
 package com.demo.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.json.simple.JSONObject;
 
 /**
@@ -11,7 +12,7 @@ import org.json.simple.JSONObject;
  * to supply callback behavior for this project's producers and consumers.
  */
 public class KafkaMessageHandlerImpl implements KafkaMessageHandler{
-    static Logger log = Logger.getLogger(KafkaMessageHandlerImpl.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(KafkaMessageHandlerImpl.class);
 
     @Override
     public void processMessage(String topicName, ConsumerRecord<String, String> message) throws Exception {
