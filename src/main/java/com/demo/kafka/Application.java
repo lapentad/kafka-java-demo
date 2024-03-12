@@ -44,16 +44,14 @@ public class Application {
 	}
 
     @GetMapping("/startProducer/{topicName}")
-    public String startProducer(@PathVariable String topicName) throws Exception {
-        var producer = new SimpleProducer();
-        var messageHandler = new ApplicationMessageHandlerImpl(); 
-        producer.runAlways(topicName, messageHandler);
+    public String startProducer(@PathVariable("topicName") String topicName) throws Exception {
+        new SimpleProducer().runAlways(topicName, new ApplicationMessageHandlerImpl());
         return "Producer started for topic: " + topicName;
     }
 
 
     @GetMapping("/startConsumer/{topicName}")
-    public String startConsumer(@PathVariable String topicName) throws Exception {
+    public String startConsumer(@PathVariable("topicName") String topicName) throws Exception {
         var consumer = new SimpleConsumer();
         var messageHandler = new ApplicationMessageHandlerImpl(); 
         consumer.runAlways(topicName, messageHandler);
