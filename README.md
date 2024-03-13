@@ -10,30 +10,43 @@ sh ./prerun.sh
 # Install Kafka as a container
 
 ```shell
-docker run -it -d --name kafka-zkless -p 9092:9092 -e LOG_DIR=/tmp/logs quay.io/strimzi/kafka:latest-kafka-2.8.1-amd64 /bin/sh -c 'export CLUSTER_ID=$(bin/kafka-storage.sh random-uuid) && bin/kafka-storage.sh format -t $CLUSTER_ID -c config/kraft/server.properties && bin/kafka-server-start.sh config/kraft/server.properties'
+sh ./runzlkafka.sh
 ```
 Or use docker-compose
 ```shell
 docker-compose up -d
 ```
 
-# Starting the streaming producer
+# Starting the REST application
 
 In a new terminal window:
 
 ```shell
-sh ./runproducer.sh "mytopic"
+mvn spring-boot:run
 ```
 
-# Starting an asynchronous consumer
+# Starting a producer 
 
-In another terminal window:
+In another window do a GET /startProducer/{topicName}
 
 ```shell
-sh ./runconsumer.sh "mytopic"
+http://localhost:8080/startProducer/mytopic
 ```
 
-You see a steady stream of screen output that is the log output of messages being retrieved from the topic named `mytopic`.
+# Starting a Consumer 
+
+In another window do a GET /startConsumer/{topicName}
+
+```shell
+http://localhost:8080/startConsumer/mytopic
+```
+
+# Reading the logs
+
+The logs will be saved in the log/ folder
+- app.log
+- Consumer.log
+- Producer.log 
 
 A sample of the output is as follows:
 
