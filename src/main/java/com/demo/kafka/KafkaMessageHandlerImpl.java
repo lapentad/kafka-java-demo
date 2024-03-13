@@ -16,7 +16,6 @@ public class KafkaMessageHandlerImpl implements KafkaMessageHandler{
 
     @Override
     public void processMessage(String topicName, ConsumerRecord<String, String> message) throws Exception {
-        String position = message.partition() + "-" + message.offset();
         String source = KafkaMessageHandlerImpl.class.getName();
         JSONObject obj = MessageHelper.getMessageLogEntryJSON(source, topicName,message.key(),message.value());
         log.info(obj.toJSONString());
