@@ -11,3 +11,13 @@ services:
     command: /bin/sh -c 'export CLUSTER_ID=$(bin/kafka-storage.sh random-uuid) && bin/kafka-storage.sh format -t $CLUSTER_ID -c config/kraft/server.properties && bin/kafka-server-start.sh config/kraft/server.properties'
     tty: true
     stdin_open: true
+
+  informationcoordinator:
+    image: o-ran-sc/nonrtric-plt-informationcoordinatorservice:latest
+    ports:
+      - "8083:8083"
+
+  kafka-client:
+    build: .
+    ports:
+      - "8080:8080"
