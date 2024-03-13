@@ -1,4 +1,4 @@
-version: '3.8'
+version: '2'
 
 services:
   kafka-zkless:
@@ -8,7 +8,10 @@ services:
       - "9092:9092"
     environment:
       - LOG_DIR=/tmp/logs
-    command: /bin/sh -c 'export CLUSTER_ID=$(bin/kafka-storage.sh random-uuid) && bin/kafka-storage.sh format -t $CLUSTER_ID -c config/kraft/server.properties && bin/kafka-server-start.sh config/kraft/server.properties'
+    command: [
+      "sh", "-c",
+      "./bin/kafka-storage.sh format -t $$(./bin/kafka-storage.sh random-uuid) -c ./config/kraft/server.properties && ./bin/kafka-server-start.sh ./config/kraft/server.properties"
+    ]
     tty: true
     stdin_open: true
 
