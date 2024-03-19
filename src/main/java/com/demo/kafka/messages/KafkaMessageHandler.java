@@ -18,27 +18,24 @@
  * ========================LICENSE_END===================================
  */
 
-package com.demo.kafka.r1;
+package com.demo.kafka.messages;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 
-public class ProducerInfoTypeInfo {
-
-    @SerializedName("info_job_data_schema")
-    @JsonProperty(value = "info_job_data_schema", required = true)
-    public Object jobDataSchema;
-
-    @SerializedName("info_type_information")
-    @JsonProperty(value = "info_type_information", required = true)
-    public Object typeSpecificInformation;
-
-    public ProducerInfoTypeInfo(Object jobDataSchema, Object typeSpecificInformation) {
-        this.jobDataSchema = jobDataSchema;
-        this.typeSpecificInformation = typeSpecificInformation;
-    }
-
-    public ProducerInfoTypeInfo() {
-    }
-
+/**
+ * The interface KafkaMessageHandler.
+ *
+ * This interface is the template callback functions that can
+ * be passed to an instance of the {@link com.demo.kafka.consumer.SimpleConsumer}
+ */
+@FunctionalInterface
+public interface KafkaMessageHandler {
+    /**
+     * The method that defines the message processing behavior
+     *
+     * @param topicName The name of the topic being consumed
+     * @param message The message that was consumed
+     * @throws Exception Thrown if an exception occurs
+     */
+    void processMessage(String topicName, ConsumerRecord<String, String> message) throws Exception;
 }

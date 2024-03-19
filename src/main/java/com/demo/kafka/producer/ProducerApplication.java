@@ -18,27 +18,14 @@
  * ========================LICENSE_END===================================
  */
 
-package com.demo.kafka.r1;
+package com.demo.kafka.producer;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
+import com.demo.kafka.messages.ApplicationMessageHandlerImpl;
 
-public class ProducerInfoTypeInfo {
-
-    @SerializedName("info_job_data_schema")
-    @JsonProperty(value = "info_job_data_schema", required = true)
-    public Object jobDataSchema;
-
-    @SerializedName("info_type_information")
-    @JsonProperty(value = "info_type_information", required = true)
-    public Object typeSpecificInformation;
-
-    public ProducerInfoTypeInfo(Object jobDataSchema, Object typeSpecificInformation) {
-        this.jobDataSchema = jobDataSchema;
-        this.typeSpecificInformation = typeSpecificInformation;
+public class ProducerApplication {
+    public static void main(String[] args) throws Exception {
+        String topicName = args[1];
+        System.out.println("Starting the Producer\n");
+        new SimpleProducer().runAlways(topicName, new ApplicationMessageHandlerImpl());
     }
-
-    public ProducerInfoTypeInfo() {
-    }
-
 }

@@ -18,27 +18,22 @@
  * ========================LICENSE_END===================================
  */
 
-package com.demo.kafka.r1;
+package com.demo.kafka.messages;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class ProducerInfoTypeInfo {
+public class ApplicationMessageHandlerImpl implements KafkaMessageHandler {
 
-    @SerializedName("info_job_data_schema")
-    @JsonProperty(value = "info_job_data_schema", required = true)
-    public Object jobDataSchema;
+    private static final Logger log = LoggerFactory.getLogger(ApplicationMessageHandlerImpl.class);
 
-    @SerializedName("info_type_information")
-    @JsonProperty(value = "info_type_information", required = true)
-    public Object typeSpecificInformation;
-
-    public ProducerInfoTypeInfo(Object jobDataSchema, Object typeSpecificInformation) {
-        this.jobDataSchema = jobDataSchema;
-        this.typeSpecificInformation = typeSpecificInformation;
+    @Override
+    public void processMessage(String topicName, ConsumerRecord<String, String> message) throws Exception {
+        String source = KafkaMessageHandlerImpl.class.getName();
+        JSONObject obj = MessageHelper.getMessageLogEntryJSON(source, topicName, message.key(), message.value());
+        System.out.println(obj.toJSONString());
+        log.info(obj.toJSONString());
     }
-
-    public ProducerInfoTypeInfo() {
-    }
-
 }

@@ -1,4 +1,24 @@
-package com.demo.kafka;
+/*-
+ * ========================LICENSE_START=================================
+ * O-RAN-SC
+ * 
+ * Copyright (C) 2024 Nordix Foundation
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ========================LICENSE_END===================================
+ */
+
+package com.demo.kafka.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -10,6 +30,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.demo.kafka.messages.AbstractSimpleKafka;
+import com.demo.kafka.messages.KafkaMessageHandler;
+import com.demo.kafka.messages.MessageHelper;
+import com.demo.kafka.messages.PropertiesHelper;
+
 import java.util.*;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,8 +45,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * {@link org.apache.kafka.clients.consumer.KafkaConsumer}.
  */
 @Component
-class SimpleConsumer extends AbstractSimpleKafka{
-    
+public class SimpleConsumer extends AbstractSimpleKafka {
+
     private KafkaConsumer<String, String> kafkaConsumer = null;
     private final AtomicBoolean closed = new AtomicBoolean(false);
 
@@ -51,27 +76,27 @@ class SimpleConsumer extends AbstractSimpleKafka{
      * This method is provided as a convenience for testing purposes. It does
      * not use the KafkaConsumer internal to the class.
      *
-     * @param topicName    the topic to access
+     * @param topicName the topic to access
      * @param callback the callback function that processes messages retrieved
-     *                 from Kafka
+     *        from Kafka
      * @param numberOfRecords Optional, the max number of records to retrieve during the
-     *                        run to the consumer. If nul, the  number of records will be that
-     *                        value defined in max.poll.records as defined in config.properties
+     *        run to the consumer. If nul, the number of records will be that
+     *        value defined in max.poll.records as defined in config.properties
      * @throws Exception the Exception that will get thrown upon an error
      */
-    void run(String topicName, KafkaMessageHandler callback, Integer numberOfRecords) throws Exception {
+    public void run(String topicName, KafkaMessageHandler callback, Integer numberOfRecords) throws Exception {
         Properties props = PropertiesHelper.getProperties();
-        //See if the number of records is provided
+        // See if the number of records is provided
         Optional<Integer> recs = Optional.ofNullable(numberOfRecords);
 
-        //adjust the number of records to get accordingly
+        // adjust the number of records to get accordingly
         Integer numOfRecs = recs.orElseGet(() -> Integer.parseInt(props.getProperty("max.poll.records")));
         props.setProperty("max.poll.records", String.valueOf(numOfRecs));
 
         // create the consumer
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
-        //make the consumer available for graceful shutdown
+        // make the consumer available for graceful shutdown
         setKafkaConsumer(consumer);
         consumer.assign(Collections.singleton(new TopicPartition(topicName, 0)));
 
@@ -94,36 +119,36 @@ class SimpleConsumer extends AbstractSimpleKafka{
     }
 
     private void close() throws Exception {
-        if (this.getKafkaConsumer() == null){
+        if (this.getKafkaConsumer() == null) {
             log.info(MessageHelper.getSimpleJSONObject("The internal consumer is NULL").toJSONString());
             return;
         }
         log.info(MessageHelper.getSimpleJSONObject("Closing consumer").toJSONString());
-        if( this.getKafkaConsumer() != null) this.getKafkaConsumer().close();
+        if (this.getKafkaConsumer() != null)
+            this.getKafkaConsumer().close();
     }
 
     /**
      * The runAlways method retrieves a collection of ConsumerRecords continuously.
      * The number of max number of records retrieved in each polling session back to
      * the Kafka broker is defined by the property max.poll.records as published by
-     * the class {@link com.demo.kafka.PropertiesHelper} object
+     * the class {@link com.demo.kafka.messages.PropertiesHelper} object
      *
-     * @param topicName    the topic to access
+     * @param topicName the topic to access
      * @param callback the callback function that processes messages retrieved
-     *                 from Kafka
+     *        from Kafka
      * @throws Exception the Exception that will get thrown upon an error
      */
     public void runAlways(String topicName, KafkaMessageHandler callback) throws Exception {
         Properties props = PropertiesHelper.getProperties();
-        //make the consumer available for graceful shutdown
+        // make the consumer available for graceful shutdown
         setKafkaConsumer(new KafkaConsumer<>(props));
 
-        //keep running forever or until shutdown() is called from another thread.
+        // keep running forever or until shutdown() is called from another thread.
         try {
             getKafkaConsumer().subscribe(List.of(topicName));
             while (!closed.get()) {
-                ConsumerRecords<String, String> records =
-                        getKafkaConsumer().poll(Duration.ofMillis(TIME_OUT_MS));
+                ConsumerRecords<String, String> records = getKafkaConsumer().poll(Duration.ofMillis(TIME_OUT_MS));
                 if (records.count() == 0) {
                     log.info(MessageHelper.getSimpleJSONObject("No records retrieved").toJSONString());
                 }
@@ -134,13 +159,16 @@ class SimpleConsumer extends AbstractSimpleKafka{
             }
         } catch (WakeupException e) {
             // Ignore exception if closing
-            if (!closed.get()) throw e;
+            if (!closed.get())
+                throw e;
         }
     }
+
     /**
      * Shuts down the internal {@link org.apache.kafka.clients.consumer.KafkaConsumer}
      * This method is provided as a convenience for shutting down the consumer when
      * invoked using SimpleConsumer.runAlways().
+     * 
      * @throws Exception the Exception that will get thrown upon an error
      */
     public void shutdown() throws Exception {

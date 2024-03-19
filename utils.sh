@@ -28,7 +28,7 @@ checkDocker() {
         echo "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg"
         echo "echo \"deb [arch=\$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \$(lsb_release -cs) stable\" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null"
         echo "sudo apt-get update"
-        echo "sudo apt-get install -y docker-ce docker-ce-cli containerd.io"
+        echo "sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
         echo "sudo usermod -aG docker \$USER"
 		echo "newgrp docker"
         exit 1
@@ -37,9 +37,21 @@ checkDocker() {
     fi
 }
 
-# Function to wait for a Docker container to be running
+checkDockerCompose() {
+    if ! docker-compose -v > /dev/null 2>&1; then
+        echo "docker-compose is not installed. Please install docker-compose"
+        echo "sudo apt-get install docker-compose-plugin"
+        exit 1
+    else
+        echo "docker-compose is installed."
+    fi
+}
+
+# Function to wait for a Docker container to be running and log a specific string
 wait_for_container() {
     local container_name="$1"
+    local log_string="$2"
+
     while ! docker inspect "$container_name" &>/dev/null; do
         echo "Waiting for container '$container_name' to be created..."
         sleep 5
@@ -47,6 +59,12 @@ wait_for_container() {
 
     while [ "$(docker inspect -f '{{.State.Status}}' "$container_name")" != "running" ]; do
         echo "Waiting for container '$container_name' to be running..."
+        sleep 5
+    done
+
+    # Check container logs for the specified string
+    while ! docker logs "$container_name" 2>&1 | grep "$log_string"; do
+        echo "Waiting for '$log_string' in container logs of '$container_name'..."
         sleep 5
     done
 }

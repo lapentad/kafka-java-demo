@@ -3,6 +3,9 @@ package com.demo.kafka;
 import org.apache.kafka.clients.admin.*;
 import org.apache.kafka.common.KafkaFuture;
 
+import com.demo.kafka.messages.MessageHelper;
+import com.demo.kafka.messages.PropertiesHelper;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -25,19 +28,18 @@ public class KafkaTopicHelper {
 
         Properties props = PropertiesHelper.getProperties();
         Admin admin = Admin.create(props);
-        //if the topic exists, if not make it
+        // if the topic exists, if not make it
         ListTopicsResult topics = admin.listTopics();
 
         for (TopicListing listing : topics.listings().get()) {
-            if(new String(listing.name()).equals(topicName)) return listing;
+            if (new String(listing.name()).equals(topicName))
+                return listing;
         }
         int partitions = 1;
         short replicationFactor = 1;
         NewTopic newTopic = new NewTopic(topicName, partitions, replicationFactor);
 
-        CreateTopicsResult result = admin.createTopics(
-                Collections.singleton(newTopic)
-        );
+        CreateTopicsResult result = admin.createTopics(Collections.singleton(newTopic));
 
         KafkaFuture<Void> future = result.values().get(topicName);
         future.get();
@@ -45,7 +47,8 @@ public class KafkaTopicHelper {
         topics = admin.listTopics();
 
         for (TopicListing listing : topics.listings().get()) {
-            if(new String(listing.name()).equals(topicName)) return listing;
+            if (new String(listing.name()).equals(topicName))
+                return listing;
         }
 
         return null;
@@ -66,9 +69,7 @@ public class KafkaTopicHelper {
         short replicationFactor = 1;
         NewTopic newTopic = new NewTopic(newTopicName, partitions, replicationFactor);
 
-        CreateTopicsResult result = admin.createTopics(
-                Collections.singleton(newTopic)
-        );
+        CreateTopicsResult result = admin.createTopics(Collections.singleton(newTopic));
 
         KafkaFuture<Void> future = result.values().get(newTopicName);
         future.get();

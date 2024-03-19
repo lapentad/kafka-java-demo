@@ -21,6 +21,11 @@ services:
       - "8083:8083"
 
   kafka-client:
-    build: .
+    image: kafka-client:latest
     ports:
       - "8080:8080"
+
+  curl-client:
+    image: curlimages/curl:latest
+    container_name: curl-client
+    command: ["tail", "-f", "/dev/null"]

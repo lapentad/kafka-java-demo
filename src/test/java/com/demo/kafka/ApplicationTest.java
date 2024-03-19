@@ -1,8 +1,5 @@
 package com.demo.kafka;
 
-import org.junit.After;
-import org.junit.Before;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -24,9 +21,9 @@ public class ApplicationTest {
      *
      * @throws Exception the exception
      */
-    @Test (enabled=false)
+    @Test(enabled = false)
     public void canRunApplicationForProducer() throws Exception {
-        Application.main(new String[] {"producer","mycooltopic", "10"});
+        Application.main(new String[] {"producer", "mycooltopic", "10"});
     }
 
     /**
@@ -39,9 +36,9 @@ public class ApplicationTest {
      *
      * @throws Exception the exception
      */
-    @Test (enabled=false)
+    @Test(enabled = false)
     public void canRunApplicationForConsumer() throws Exception {
-        Application.main(new String[] {"consumer","mycooltopic", "10"});
+        Application.main(new String[] {"consumer", "mycooltopic", "10"});
     }
 
 }

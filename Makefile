@@ -6,9 +6,10 @@ DOCKERFILE = Dockerfile
 .PHONY: all
 all: build run
 
-# Maven JAR
+# Target to build the Maven JAR
 .PHONY: jar
-jar: mvn clean package
+jar:
+	mvn clean package
 
 # Target to build the Docker image
 .PHONY: build

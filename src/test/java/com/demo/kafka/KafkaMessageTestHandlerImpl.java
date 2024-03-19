@@ -6,6 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 
+import com.demo.kafka.messages.KafkaMessageHandler;
+import com.demo.kafka.messages.KafkaMessageHandlerImpl;
+import com.demo.kafka.messages.MessageHelper;
+
 /**
  * The class KafkaMessageTestHandlerImpl is the callback functions that's
  * using when running producer and consumer tests that require a callback
@@ -14,7 +18,7 @@ import org.testng.Assert;
  * The class runs assertions against the message passed to the method named
  * processMessage()
  */
-public class KafkaMessageTestHandlerImpl implements KafkaMessageHandler{
+public class KafkaMessageTestHandlerImpl implements KafkaMessageHandler {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaMessageTestHandlerImpl.class);
     private int numberOfCalls = 0;
@@ -24,12 +28,12 @@ public class KafkaMessageTestHandlerImpl implements KafkaMessageHandler{
         Assert.assertNotNull(message);
         String position = message.partition() + "-" + message.offset();
 
-        Assert.assertEquals(message.key().getClass(),String.class);
-        Assert.assertEquals(message.value().getClass(),String.class);
+        Assert.assertEquals(message.key().getClass(), String.class);
+        Assert.assertEquals(message.value().getClass(), String.class);
         Assert.assertEquals(topicName, message.topic());
 
         String source = KafkaMessageHandlerImpl.class.getName();
-        JSONObject obj = MessageHelper.getMessageLogEntryJSON(source, topicName,message.key(),message.value());
+        JSONObject obj = MessageHelper.getMessageLogEntryJSON(source, topicName, message.key(), message.value());
         setNumberOfCalls(getNumberOfCalls() + 1);
 
         log.info(obj.toJSONString());

@@ -1,3 +1,23 @@
+/*-
+ * ========================LICENSE_START=================================
+ * O-RAN-SC
+ * 
+ * Copyright (C) 2024 Nordix Foundation
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ========================LICENSE_END===================================
+ */
+
 package com.demo.kafka.repository;
 
 import lombok.Builder;
@@ -18,6 +38,9 @@ public class Job {
 
             @Getter
             private String bootStrapServers;
+
+            @Getter 
+            private int numberOfMessages;
         }
 
         @Getter
@@ -36,14 +59,10 @@ public class Job {
     @Getter
     private final Parameters parameters;
 
-    @Getter
-    private final String lastUpdated;
-
-    public Job(String id, InfoType type, String owner, String lastUpdated, Parameters parameters) {
+    public Job(String id, InfoType type, String owner, Parameters parameters) {
         this.id = id;
         this.type = type;
         this.owner = owner;
-        this.lastUpdated = lastUpdated;
         this.parameters = parameters;
     }
 }
